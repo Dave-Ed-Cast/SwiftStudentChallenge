@@ -1,6 +1,7 @@
 {
   "images" : [
     {
+      "filename" : "iPadKeyboardLight 2.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -11,6 +12,7 @@
           "value" : "light"
         }
       ],
+      "filename" : "iPadKeyboardLight 3.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -21,6 +23,7 @@
           "value" : "dark"
         }
       ],
+      "filename" : "iPadKeyboardDark 1.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -73,6 +76,7 @@
       "scale" : "3x"
     },
     {
+      "filename" : "iPadKeyboardLight.png",
       "idiom" : "ipad",
       "scale" : "1x"
     },
@@ -83,6 +87,7 @@
           "value" : "light"
         }
       ],
+      "filename" : "iPadKeyboardLight 1.png",
       "idiom" : "ipad",
       "scale" : "1x"
     },
@@ -93,6 +98,7 @@
           "value" : "dark"
         }
       ],
+      "filename" : "iPadKeyboardDark.png",
       "idiom" : "ipad",
       "scale" : "1x"
     },

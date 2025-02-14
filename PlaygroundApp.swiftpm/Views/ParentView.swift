@@ -15,9 +15,7 @@ struct ParentView: View {
         ZStack {
             switch view.value {
             case .createPassword:
-                CreatePassword()
-            case .reward:
-                RewardView()
+                MainView()
             }
         }
     }

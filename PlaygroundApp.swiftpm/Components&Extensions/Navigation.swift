@@ -9,7 +9,6 @@ import SwiftUI
 
 enum NavigationValue {
     case createPassword
-    case reward
 }
 
 class Navigation: ObservableObject {

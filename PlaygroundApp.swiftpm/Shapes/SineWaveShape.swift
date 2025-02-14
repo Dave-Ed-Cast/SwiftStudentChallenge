@@ -10,6 +10,11 @@ import SwiftUI
 struct SineWaveShape: Shape {
     var phase: CGFloat
     
+    var animatableData: CGFloat {
+        get { phase }
+        set { phase = newValue }
+    }
+    
     func path(in rect: CGRect) -> Path {
         var path = Path()
         let amplitude: CGFloat = 50

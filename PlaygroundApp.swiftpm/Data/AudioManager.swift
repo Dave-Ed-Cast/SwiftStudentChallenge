@@ -68,7 +68,7 @@ class AudioManager: NSObject, AVAudioRecorderDelegate, SFSpeechRecognizerDelegat
         audioRecorder.record()
         
         // 🎤 Capture volume levels every 0.05s
-        timer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true) { _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true) { _ in
             self.audioRecorder.updateMeters()
             let level = pow(10, self.audioRecorder.averagePower(forChannel: 0) / 20) // Convert to linear scale
             self.onVolumeUpdate?(level)

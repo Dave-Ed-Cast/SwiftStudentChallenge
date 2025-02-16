@@ -9,10 +9,8 @@ import SwiftUI
 
 struct Step2: View {
     var body: some View {
-        HStack {
-            ShapeTransitionView(shapeIndex: 0)
-            ShapeTransitionView(shapeIndex: 2)
-        }
+        Circle()
+            .frame(width: 200, height: 200)
     }
 }
 

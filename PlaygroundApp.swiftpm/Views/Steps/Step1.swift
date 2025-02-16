@@ -9,7 +9,7 @@ import SwiftUI
 
 struct Step1: View {
     var body: some View {
-        ShapeTransitionView(shapeIndex: 0)
+        RecognizedShape()
     }
 }
 

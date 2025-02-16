@@ -12,6 +12,7 @@ using namespace metal;
 struct Uniforms {
     float time;
     float amplitude;
+    float frequency; // NEW
 };
 
 // Convert HSV to RGB
@@ -41,8 +42,7 @@ vertex VertexOut vertex_main(uint vertexID [[vertex_id]],
                              constant Uniforms &uniforms [[buffer(1)]]) {
     VertexOut out;
     float2 position = vertices[vertexID];
-    position.y = uniforms.amplitude * sin(10.0 * position.x + uniforms.time);
-    
+    position.y = uniforms.amplitude * sin(uniforms.frequency * position.x + uniforms.time);
     out.position = float4(position, 0.0, 1.0);
     
     float t = (position.x + 1.0) / 2.0;

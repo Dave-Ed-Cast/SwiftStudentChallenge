@@ -17,7 +17,10 @@ struct MetalSineWaveView: UIViewRepresentable {
         let view = MTKView()
         view.device = MTLCreateSystemDefaultDevice()
         view.colorPixelFormat = .bgra8Unorm
-        view.clearColor = MTLClearColor(red: 1, green: 1, blue: 1, alpha: 0)
+        view.autoResizeDrawable = true
+        view.backgroundColor = .clear
+//        view.clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 0)
+        view.clearColor = MTLClearColor(red: 1, green: 1, blue: 1, alpha: 1)
         view.delegate = context.coordinator
         return view
     }
@@ -28,16 +31,23 @@ struct MetalSineWaveView: UIViewRepresentable {
 struct Uniforms {
     var time: Float
     var amplitude: Float
+    var frequency: Float // NEW
 }
 
 class Coordinator: NSObject, MTKViewDelegate {
     var device: MTLDevice!
     var commandQueue: MTLCommandQueue!
     var pipelineState: MTLRenderPipelineState!
+    
     var time: Float = 0
-    var amplitude: Float = 0.3 // Base amplitude
+    var amplitude: Float = 0.3
+    var frequency: Float = 10.0
+    
     var vertexBuffer: MTLBuffer!
+    var uniformBuffer: MTLBuffer! // Store buffer persistently
+    
     var audioManager = AudioManager()
+
     
     override init() {
         super.init()
@@ -45,10 +55,15 @@ class Coordinator: NSObject, MTKViewDelegate {
         commandQueue = device?.makeCommandQueue()
         setupPipeline()
         
-        // 🎤 Update amplitude based on voice input
         audioManager.onVolumeUpdate = { [weak self] level in
-            self?.amplitude = 0.1 + (level * 0.4) // Scale the amplitude
+            DispatchQueue.main.async {
+                self?.frequency = (level * 2500.0)
+                self?.amplitude = (level * 50.0)
+            }
         }
+        
+        uniformBuffer = device?.makeBuffer(length: MemoryLayout<Uniforms>.size, options: [])
+
     }
     
     func setupPipeline() {
@@ -87,15 +102,31 @@ class Coordinator: NSObject, MTKViewDelegate {
         let renderEncoder = commandBuffer?.makeRenderCommandEncoder(descriptor: renderPassDescriptor)
         
         renderEncoder?.setRenderPipelineState(pipelineState)
+        
+        // 🔥 STEP 1: Recalculate sine wave vertices each frame
+        let vertexCount = 100
+        var vertices: [Float] = []
+        
+        for i in 0..<vertexCount {
+            let x = -1.0 + 2.0 * (Float(i) / Float(vertexCount - 1))
+            let y = amplitude * sin(frequency * x + time) // Reacts to frequency/amplitude!
+            vertices.append(contentsOf: [x, y])
+        }
+        
+        // 🔥 STEP 2: Update vertex buffer every frame
+        vertexBuffer = device.makeBuffer(bytes: vertices, length: vertices.count * MemoryLayout<Float>.size, options: [])
+        
         renderEncoder?.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
         
-        // ✅ Update uniforms (time + amplitude)
+        // 🔥 STEP 3: Update uniforms (time, frequency, amplitude)
         time += 0.05
-        var uniforms = Uniforms(time: time, amplitude: amplitude)
-        let uniformBuffer = device.makeBuffer(bytes: &uniforms, length: MemoryLayout<Uniforms>.size, options: [])
+        var uniforms = Uniforms(time: time, amplitude: amplitude, frequency: frequency)
+        memcpy(uniformBuffer.contents(), &uniforms, MemoryLayout<Uniforms>.size)
+        
         renderEncoder?.setVertexBuffer(uniformBuffer, offset: 0, index: 1)
         
-        renderEncoder?.drawPrimitives(type: .lineStrip, vertexStart: 0, vertexCount: 100)
+        // 🔥 STEP 4: Draw updated sine wave
+        renderEncoder?.drawPrimitives(type: .lineStrip, vertexStart: 0, vertexCount: vertexCount)
         
         renderEncoder?.endEncoding()
         commandBuffer?.present(drawable)

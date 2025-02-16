@@ -13,13 +13,13 @@ struct ShapeTransitionView: View {
     @State var shapeIndex: Int
     @State var randomize: Bool = false
     
-    let shapeTypes: [ShapeView.ShapeType] = [.circle, .rectangle, .triangle]
+    let shapeTypes: [ShapeView.ShapeType] = [.circle, .square, .triangle]
     
     var body: some View {
         let xOffsets: [CGFloat] = [-deviceWidth * 0.15, 0, deviceWidth * 0.15]
         
         ShapeView(type: shapeTypes[shapeIndex], strokeColor: randomize ? .red : .primary)
-            .frame(width: deviceWidth * 0.2, height: deviceWidth * 0.2)
+            .frame(width: 100, height: 100)
             .offset(x: randomize ? xOffsets.randomElement()! : 0)
             .onAppear {
                 Task {

@@ -11,7 +11,8 @@ struct MainView: View {
     
     @State private var currentStep: Int = 0
     @State private var phase: CGFloat = 0
-    @State private var keyboardChoice: String = UserDefaults.standard.string(forKey: "keyboard") ?? "none"
+    @State private var keyboardChoice: String = "none"
+    @State private var recognizedText: String = "Say something..."
 
     let stepName = Steps.stepsArray
     let stepDescription = Steps.descriptionArray
@@ -24,7 +25,10 @@ struct MainView: View {
                 Text(stepName[currentStep])
                     .font(.largeTitle)
                 Text(stepDescription[currentStep])
-                    .font(.title3)
+                    .font(.title2)
+                
+                Text(recognizedText)
+                    .font(.headline)
                 
                 switch currentStep {
                 case 0:
@@ -33,22 +37,14 @@ struct MainView: View {
                     Step2()
                 case 2:
                     Step3()
-                        
                 case 3:
                     Step4(keyboardChoice: $keyboardChoice)
-                        .onAppear {
-                            print(keyboardChoice)
-                        }
-                        .onChange(of: keyboardChoice) {
-                            print($0)
-                        }
                 case 4:
-                    Step5()
+                    Step5(keyboardChoice: $keyboardChoice)
                 case 5:
                     Step6()
                 case 6:
-                    Circle()
-                        .frame(width: 200, height: 200)
+                    Step7()
                 case 7:
                     Circle()
                         .frame(width: 200, height: 200)
@@ -58,10 +54,11 @@ struct MainView: View {
             }
             .multilineTextAlignment(.center)
             
-            SineWaveShape(phase: phase)
-                .stroke(Color.blue, lineWidth: 6)
-                .scaleEffect(1.1)
-                
+//            SineWaveShape(phase: phase)
+//                .stroke(Color.blue, lineWidth: 6)
+//                .scaleEffect(1.1)
+            MetalSineWaveView()
+            
             Button {
                 if currentStep < Steps.stepsArray.count {
                     currentStep += 1
@@ -73,7 +70,7 @@ struct MainView: View {
                 ZStack {
                     RoundedRectangle(cornerRadius: 20)
                         .foregroundStyle(.blue)
-                    Text("Next!")
+                    Text(disabled ? "Choose..." : "Next!")
                         .foregroundStyle(.white)
                         .font(.title2)
                 }
@@ -81,6 +78,20 @@ struct MainView: View {
             }
             .disabled(disabled)
             .opacity(disabled ? 0.5 : 1)
+        }
+        .onAppear {
+            let audioManager = AudioManager()
+            audioManager.onTextUpdate = { text in
+                DispatchQueue.main.async {
+                    if let lastWord = text.split(separator: " ").last {
+                        self.recognizedText = String(lastWord)
+                    }
+                }
+            }
+        }
+        .onChange(of: recognizedText) { newValue in
+            recognizedText = ""
+            recognizedText = newValue
         }
         .padding()
     }

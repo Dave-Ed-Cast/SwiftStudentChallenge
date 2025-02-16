@@ -8,23 +8,29 @@
 import SwiftUI
 
 struct ShapeTransitionView: View {
-    @State var shapeIndex: Int
     
-    let shapes: [AnyView] = [
-        AnyView(Circle().strokeBorder(Color.primary, lineWidth: 5)),
-        AnyView(Rectangle().strokeBorder(Color.primary, lineWidth: 5)),
-        AnyView(Triangle().strokeBorder(Color.primary, lineWidth: 5))
-    ]
+    @State private var xPositionIndex: Int = 0
+    @State var shapeIndex: Int
+    @State var randomize: Bool = false
+    
+    let shapeTypes: [ShapeView.ShapeType] = [.circle, .rectangle, .triangle]
     
     var body: some View {
-        shapes[shapeIndex]
+        let xOffsets: [CGFloat] = [-deviceWidth * 0.15, 0, deviceWidth * 0.15]
+        
+        ShapeView(type: shapeTypes[shapeIndex], strokeColor: randomize ? .red : .primary)
             .frame(width: deviceWidth * 0.2, height: deviceWidth * 0.2)
+            .offset(x: randomize ? xOffsets.randomElement()! : 0)
             .onAppear {
                 Task {
                     while true {
                         try? await Task.sleep(nanoseconds: 1_250_000_000)
-                        withAnimation(.interactiveSpring(duration: 0.75, extraBounce: 0.2, blendDuration: 0.3)) {
-                            shapeIndex = (shapeIndex + 1) % shapes.count
+                        withAnimation(.interactiveSpring(duration: 0.5, extraBounce: 0.2, blendDuration: 0.3)) {
+                            shapeIndex = (shapeIndex + 1) % shapeTypes.count
+                            
+                            if randomize {
+                                xPositionIndex = (xPositionIndex + 1) % xOffsets.count
+                            }
                         }
                     }
                 }

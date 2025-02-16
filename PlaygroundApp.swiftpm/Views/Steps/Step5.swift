@@ -9,19 +9,25 @@ import SwiftUI
 
 struct Step5: View {
     
-    let config = UserDefaults.standard
+    @Binding var keyboardChoice: String
     
     var body: some View {
-        Image(config.string(forKey: "keyboard") ?? "none")
+        Image(keyboardChoice)
             .resizable()
             .scaledToFit()
-            .padding()
             .frame(width: deviceWidth * 0.8)
+            .overlay {
+                ShapeTransitionView(
+                    shapeIndex: 0,
+                    randomize: true
+                )
+            }
+            .padding()
     }
 }
 
 
 
 #Preview {
-    Step5()
+    Step5(keyboardChoice: .constant("Traditional"))
 }

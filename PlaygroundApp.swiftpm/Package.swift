@@ -32,6 +32,10 @@ let package = Package(
                 .landscapeLeft,
                 .portraitUpsideDown(.when(deviceFamilies: [.pad]))
             ],
+            capabilities: [
+                .microphone(purposeString: "We ask to use the microphone to improve user experience and allowing the selection of your preference."),
+                .speechRecognition(purposeString: "We ask to recognize your speech to understand the selection of your preference.")
+            ],
             appCategory: .utilities
         )
     ],

@@ -9,13 +9,14 @@ import SwiftUI
 
 struct ParentView: View {
     
-    @EnvironmentObject private var view: Navigation
+    @EnvironmentObject private var navigation: Navigation
     
     var body: some View {
         ZStack {
-            switch view.value {
+            switch navigation.value {
             case .createPassword:
                 MainView()
+                    .environmentObject(navigation)
             }
         }
     }

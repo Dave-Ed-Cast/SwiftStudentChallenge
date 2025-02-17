@@ -10,24 +10,32 @@ import SwiftUI
 struct Step4: View {
     
     @Binding var keyboardChoice: String
-    
+    @Binding var spokenShape: ShapeView.ShapeType
+
     var body: some View {
-        Image(keyboardChoice)
-            .resizable()
-            .scaledToFit()
-            .frame(width: deviceWidth * 0.8)
-            .overlay {
-                ShapeTransitionView(
-                    shapeIndex: 0,
-                    randomize: true
-                )
-            }
-            .padding()
+        ZStack {
+            Image(keyboardChoice)
+                .resizable()
+                .scaledToFit()
+            ShapeTransitionView(
+                spokenShape: $spokenShape,
+                shapeIndex: 0,
+                randomize: true
+            )
+            .frame(
+                width: deviceOrientation.isPortrait ? 130 : 160,
+                height: deviceOrientation.isPortrait ? 130 : 160
+            )
+            .offset(y: keyboardChoice == "Native" ? -deviceHeight * 0.016 : 0)
+        }
+        
+        .frame(width: deviceWidth * 0.6)
+        .padding()
     }
 }
 
 
 
 #Preview {
-    Step4(keyboardChoice: .constant("Traditional"))
+    Step4(keyboardChoice: .constant("Traditional"), spokenShape: .constant(.circle))
 }

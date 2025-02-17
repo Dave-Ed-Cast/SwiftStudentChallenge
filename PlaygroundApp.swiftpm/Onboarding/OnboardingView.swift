@@ -32,17 +32,17 @@ struct OnboardingView: View {
                     OnboardingViewModel(
                         onboardingComplete: $onboarding.completed,
                         title: "The concept of password strength",
-                        bodyText: "Automatic generated passwords are good! They are strong, memorable one blends uppercase, lowercase, numbers, and symbols (10+ chars)."
+                        bodyText: "Automatic generated passwords are good! They are strong, memorable one blends uppercase, lowercase, numbers, and symbols (at least 10 characters)."
                     )
                     OnboardingViewModel(
                         onboardingComplete: $onboarding.completed,
                         title: "Why would I need this?",
-                        bodyText: "Face ID/Touch ID is convenient, but what if it doesn't work? Random passwords can be tough to remember."
+                        bodyText: "Face ID/Touch ID is convenient, but what if it doesn't work? Complex passwords can be tough to remember. To make this work better we are going to ask for you to interact with your voice for different steps."
                     )
                     OnboardingViewModel(
                         onboardingComplete: $onboarding.completed,
                         title: "The best experience",
-                        bodyText: "Works on all keyboards, but an external one helps adapt your password to every occasion!",
+                        bodyText: "Works on all keyboards, but an external one helps adapt your password to every occasion! ",
                         showDoneButton: true
                     )
                 }

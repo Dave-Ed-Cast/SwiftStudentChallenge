@@ -9,63 +9,115 @@ import SwiftUI
 
 struct MainView: View {
         
+    @EnvironmentObject private var view: Navigation
+    
     @State private var currentStep: Int = 0
     @State private var phase: CGFloat = 0
-    @State private var keyboardChoice: String = "none"
+    @State private var chosenKeyboard: String = "none"
+    @State private var spokenHand: String = "none"
+    @State private var spokenShape: ShapeView.ShapeType = .unknown
+    @State private var text = ""
+
 
     let stepName = Steps.stepsArray
     let stepDescription = Steps.descriptionArray
     
+    var isButtonDisabled: Bool {
+        switch currentStep {
+        case 0:
+            return spokenShape == .unknown
+        case 1:
+            return spokenHand == "none"
+        case 2:
+            return chosenKeyboard == "none"
+        case 4:
+            return text == ""
+        default:
+            return false
+        }
+    }
+    
     var body: some View {
         VStack {
-            let disabled = (currentStep == 3 && keyboardChoice == "none")
-
             VStack(spacing: 30) {
                 Text(stepName[currentStep])
                     .font(.largeTitle)
                 Text(stepDescription[currentStep])
                     .font(.title2)
                 
+                if currentStep >= 3 {
+                    Spacer()
+                }
                 switch currentStep {
                 case 0:
-                    Step1()
+                    Step1(spokenShape: $spokenShape)
                 case 1:
-                    Step2()
+                    Step2(spokenHand: $spokenHand)
                 case 2:
-                    Step3(keyboardChoice: $keyboardChoice)
+                    Step3(chosenKeyboard: $chosenKeyboard)
                 case 3:
-                    Step4(keyboardChoice: $keyboardChoice)
+                    Text("Here is an example:")
+                    Step4(
+                        keyboardChoice: $chosenKeyboard,
+                        spokenShape: $spokenShape
+                    )
+                    Spacer()
                 case 4:
-                    Step5()
+                    Step5(
+                        spokenShape: $spokenShape,
+                        spokenHand: $spokenHand,
+                        keyboardChoice: $chosenKeyboard
+                    )
+                    TextField("Insert", text: $text, prompt: Text("Create your password here..."))
+                        .padding()
+                    Spacer()
                 case 5:
                     Step6()
+                    Spacer()
                 default:
                     EmptyView()
                 }
             }
+            
             .multilineTextAlignment(.center)
             
-            MetalSineWaveView()
-
-            Button {
-                if currentStep < Steps.stepsArray.count {
-                    currentStep += 1
-                    withAnimation(.easeOut(duration: 2)) {
-                        phase += 100
+            if currentStep < 3 {
+                AudioFeedback()
+            }
+            
+            if currentStep >= 3 {
+                Spacer()
+            }
+            if currentStep <= stepName.count {
+                Button {
+                    if currentStep < Steps.stepsArray.count {
+                        currentStep += 1
                     }
+                } label: {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 20)
+                            .foregroundStyle(.blue)
+                        Text(isButtonDisabled ? "Choose..." : "Next!")
+                            .foregroundStyle(.white)
+                            .font(.title2)
+                    }
+                    .frame(width: deviceWidth * 0.2, height: deviceHeight * 0.075)
                 }
-            } label: {
-                ZStack {
-                    RoundedRectangle(cornerRadius: 20)
-                        .foregroundStyle(.blue)
-                    Text(disabled ? "Choose..." : "Next!")
+                .onChange(of: currentStep) { newValue in
+                    print(currentStep)
+                }
+                .disabled(isButtonDisabled)
+                .opacity(isButtonDisabled ? 0.5 : 1)
+            } else {
+                Button {
+                    view.value = .createPassword
+                } label: {
+                    Text("Try again?")
                         .foregroundStyle(.white)
                         .font(.title2)
                 }
                 .frame(width: deviceWidth * 0.2, height: deviceHeight * 0.075)
             }
-            .disabled(disabled)
-            .opacity(disabled ? 0.5 : 1)
         }
         
         .padding()

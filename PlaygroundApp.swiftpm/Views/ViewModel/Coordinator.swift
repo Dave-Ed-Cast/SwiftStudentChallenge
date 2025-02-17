@@ -1,40 +1,19 @@
 //
-//  SwiftUIView.swift
+//  Uniforms.swift
 //  PlaygroundApp
 //
-//  Created by Davide Castaldi on 15/02/25.
+//  Created by Davide Castaldi on 16/02/25.
 //
 
-import SwiftUI
 import MetalKit
 
-struct MetalSineWaveView: UIViewRepresentable {
-    func makeCoordinator() -> Coordinator {
-        Coordinator()
-    }
-    
-    func makeUIView(context: Context) -> MTKView {
-        let view = MTKView()
-        view.device = MTLCreateSystemDefaultDevice()
-        view.colorPixelFormat = .bgra8Unorm
-        view.autoResizeDrawable = true
-        view.backgroundColor = .clear
-//        view.clearColor = MTLClearColor(red: 0, green: 0, blue: 0, alpha: 0)
-        view.clearColor = MTLClearColor(red: 1, green: 1, blue: 1, alpha: 1)
-        view.delegate = context.coordinator
-        return view
-    }
-    
-    func updateUIView(_ uiView: MTKView, context: Context) { }
-}
-
-struct Uniforms {
+fileprivate struct Uniforms {
     var time: Float
     var amplitude: Float
-    var frequency: Float // NEW
+    var frequency: Float
 }
 
-class Coordinator: NSObject, MTKViewDelegate {
+final class Coordinator: NSObject, MTKViewDelegate {
     var device: MTLDevice!
     var commandQueue: MTLCommandQueue!
     var pipelineState: MTLRenderPipelineState!
@@ -44,7 +23,7 @@ class Coordinator: NSObject, MTKViewDelegate {
     var frequency: Float = 10.0
     
     var vertexBuffer: MTLBuffer!
-    var uniformBuffer: MTLBuffer! // Store buffer persistently
+    var uniformBuffer: MTLBuffer!
     
     var audioManager = AudioManager()
 
@@ -63,7 +42,6 @@ class Coordinator: NSObject, MTKViewDelegate {
         }
         
         uniformBuffer = device?.makeBuffer(length: MemoryLayout<Uniforms>.size, options: [])
-
     }
     
     func setupPipeline() {
@@ -75,13 +53,19 @@ class Coordinator: NSObject, MTKViewDelegate {
         descriptor.vertexFunction = vertexFunction
         descriptor.fragmentFunction = fragmentFunction
         descriptor.colorAttachments[0].pixelFormat = .bgra8Unorm
-        
-        // ✅ Tell Metal we’re using per-vertex colors!
         descriptor.vertexDescriptor = MTLVertexDescriptor()
+        
+        let blendDescriptor = descriptor.colorAttachments[0]!
+        blendDescriptor.isBlendingEnabled = true
+        blendDescriptor.rgbBlendOperation = .add
+        blendDescriptor.alphaBlendOperation = .add
+        blendDescriptor.sourceRGBBlendFactor = .sourceAlpha
+        blendDescriptor.destinationRGBBlendFactor = .one
+        blendDescriptor.sourceAlphaBlendFactor = .one
+        blendDescriptor.destinationAlphaBlendFactor = .one
         
         pipelineState = try? device.makeRenderPipelineState(descriptor: descriptor)
         
-        // 🎨 Generate sine wave vertices
         let vertexCount = 100
         var vertices: [Float] = []
         
@@ -103,30 +87,27 @@ class Coordinator: NSObject, MTKViewDelegate {
         
         renderEncoder?.setRenderPipelineState(pipelineState)
         
-        // 🔥 STEP 1: Recalculate sine wave vertices each frame
         let vertexCount = 100
         var vertices: [Float] = []
         
         for i in 0..<vertexCount {
             let x = -1.0 + 2.0 * (Float(i) / Float(vertexCount - 1))
-            let y = amplitude * sin(frequency * x + time) // Reacts to frequency/amplitude!
+            let y = amplitude * sin(frequency * x + time)
             vertices.append(contentsOf: [x, y])
         }
         
-        // 🔥 STEP 2: Update vertex buffer every frame
         vertexBuffer = device.makeBuffer(bytes: vertices, length: vertices.count * MemoryLayout<Float>.size, options: [])
         
         renderEncoder?.setVertexBuffer(vertexBuffer, offset: 0, index: 0)
         
-        // 🔥 STEP 3: Update uniforms (time, frequency, amplitude)
         time += 0.05
         var uniforms = Uniforms(time: time, amplitude: amplitude, frequency: frequency)
         memcpy(uniformBuffer.contents(), &uniforms, MemoryLayout<Uniforms>.size)
         
         renderEncoder?.setVertexBuffer(uniformBuffer, offset: 0, index: 1)
         
-        // 🔥 STEP 4: Draw updated sine wave
-        renderEncoder?.drawPrimitives(type: .lineStrip, vertexStart: 0, vertexCount: vertexCount)
+        let instanceCount = 25
+        renderEncoder?.drawPrimitives(type: .lineStrip, vertexStart: 0, vertexCount: vertexCount, instanceCount: instanceCount)
         
         renderEncoder?.endEncoding()
         commandBuffer?.present(drawable)

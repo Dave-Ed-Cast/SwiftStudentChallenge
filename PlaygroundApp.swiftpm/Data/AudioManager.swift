@@ -17,20 +17,25 @@ class AudioManager: NSObject, AVAudioRecorderDelegate, SFSpeechRecognizerDelegat
     
     var timer: Timer?
     var onVolumeUpdate: ((Float) -> Void)?
-    var onTextUpdate: ((String) -> Void)? // Callback for recognized text
+    var onTextUpdate: ((String) -> Void)?
     
     override init() {
         super.init()
-        requestMicrophonePermission()
-        requestSpeechRecognitionPermission()
+        
+        requestMicrophonePermission {
+            self.requestSpeechRecognitionPermission()
+        }
     }
     
-    func requestMicrophonePermission() {
+    func requestMicrophonePermission(completion: @escaping () -> Void) {
         AVAudioSession.sharedInstance().requestRecordPermission { granted in
-            if granted {
-                self.setupRecorder()
-            } else {
-                print("Microphone permission denied")
+            DispatchQueue.main.async {
+                if granted {
+                    self.setupRecorder()
+                    completion()
+                } else {
+                    print("Microphone permission denied")
+                }
             }
         }
     }

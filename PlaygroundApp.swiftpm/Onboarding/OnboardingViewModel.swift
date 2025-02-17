@@ -21,11 +21,11 @@ struct OnboardingViewModel: View {
             
             let portrait = deviceOrientation.isPortrait
             Text(title)
-                .font(.largeTitle)
+                .font(.title)
                 .fontWeight(.bold)
             
             Text(bodyText)
-                .font(.title)
+                .font(.title2)
                 .multilineTextAlignment(.center)
                 .conditionalModifier(showDoneButton) {
                     $0.overlay(alignment: .bottom) {

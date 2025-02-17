@@ -12,17 +12,19 @@ struct ShapeView: View {
     let strokeColor: Color
     
     enum ShapeType {
-        case circle, square, triangle
+        case circle, triangle, square, unknown
     }
     
     var body: some View {
         switch type {
         case .circle:
             Circle().strokeBorder(strokeColor, lineWidth: 5)
-        case .square:
-            Rectangle().strokeBorder(strokeColor, lineWidth: 5)
         case .triangle:
             Triangle().strokeBorder(strokeColor, lineWidth: 5)
+        case .square:
+            Rectangle().strokeBorder(strokeColor, lineWidth: 5)
+        default:
+            EmptyView()
         }
     }
 }

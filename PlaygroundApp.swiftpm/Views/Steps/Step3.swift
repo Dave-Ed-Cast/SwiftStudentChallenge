@@ -9,54 +9,51 @@ import SwiftUI
 
 struct Step3: View {
     
-    @Binding var keyboardChoice: String
+    @Environment(\.colorScheme) private var colorScheme
     
-    @State private var choosingImages: Bool = true
-    @State private var showTraditionalKeyboard: Bool = false
-    @State private var showNativeKeyboard: Bool = false
+    @Binding var chosenKeyboard: String
     
     var body: some View {
-        Group {
-            if choosingImages {
-                HStack(spacing: 10) {
-                    Button {
-                        keyboardChoice = "Traditional"
-                        showTraditionalKeyboard = true
-                    } label: {
-                        VStack {
-                            Image("Traditional")
-                                .resizable()
-                                .interpolation(.none)
-                                .scaledToFit()
-                                .padding()
-                            Text("External/Mac keyboard")
-                        }
-                    }
-                    
-                    Button {
-                        keyboardChoice = "Native"
-                        showNativeKeyboard = true
-                    } label: {
-                        VStack {
-                            Image("Native")
-                                .resizable()
-                                .interpolation(.none)
-                                .scaledToFit()
-                                .padding()
-                            Text("iPad Native keyboard")
-                                .offset(y: deviceOrientation.isPortrait ? deviceHeight * 0.009 : 0)
+        VStack {
+            Text(chosenKeyboard != "none" ? "I heard: \(chosenKeyboard)" : "Choose one")
+            HStack {
+                VStack {
+                    Image("Traditional").resizable()
+                        .border(chosenKeyboard == "Traditional" ? Color.blue : Color.clear, width: 5)
+                    Text("Traditional").font(.headline)
+                }
+                VStack {
+                    Image("Native").resizable()
+                        .border(chosenKeyboard == "Native" ? Color.blue : Color.clear, width: 5)
+                    Text("Native").font(.headline)
+                }
+            }
+            .conditionalModifier(colorScheme == .dark) {
+                $0.colorInvert()
+            }
+            .frame(
+                width: deviceOrientation.isPortrait ? deviceWidth * 0.8: deviceWidth * 0.7,
+                height: deviceOrientation.isPortrait ? deviceHeight * 0.15 : deviceHeight * 0.25
+            )
+            .onAppear {
+                let audioManager = AudioManager()
+                audioManager.onTextUpdate = { text in
+                    DispatchQueue.main.async {
+                        if let lastWord = text.split(separator: " ").last {
+                            let lastWordString = String(lastWord).lowercased()
+                            if lastWordString == "traditional" || lastWordString == "native" {
+                                self.chosenKeyboard = lastWordString.capitalized
+                            }
                         }
                     }
                 }
-                .frame(width: deviceWidth * 0.75)
             }
-        }
-        
-        .onDisappear {
-            choosingImages = false
+            
+            .padding()
         }
     }
 }
+
 #Preview {
-    Step3(keyboardChoice: .constant("Traditional"))
+    Step3(chosenKeyboard: .constant("Traditional"))
 }

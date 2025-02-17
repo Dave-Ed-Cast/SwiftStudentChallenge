@@ -12,7 +12,7 @@ struct AnimatedWelcome: View {
     var namespace: Namespace.ID
     
     var body: some View {
-        Text("Welcome to app.")
+        Text("Welcome to KeyShape.")
             .font(.largeTitle)
             .fontWeight(.bold)
             .matchedGeometryEffect(id: "Title", in: namespace)

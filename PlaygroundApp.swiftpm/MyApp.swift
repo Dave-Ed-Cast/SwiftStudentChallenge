@@ -15,12 +15,13 @@ struct MyApp: App {
     
     var body: some Scene {
         WindowGroup {
-            if onboarding.completed || onboarding.skipped {
+            if onboarding.completed {
                 ParentView()
                     .environmentObject(navigation)
                     .environmentObject(onboarding)
             } else {
                 OnboardingView(onboarding: onboarding)
+                    .previewInterfaceOrientation(.landscapeLeft)
                     .environmentObject(navigation)
             }
             

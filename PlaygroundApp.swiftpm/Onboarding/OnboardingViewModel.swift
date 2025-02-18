@@ -26,13 +26,14 @@ struct OnboardingViewModel: View {
             
             Text(bodyText)
                 .font(.title2)
+                .frame(height: deviceHeight * 0.15)
                 .multilineTextAlignment(.center)
                 .conditionalModifier(showDoneButton) {
                     $0.overlay(alignment: .bottom) {
                         Button {
                             onboardingComplete = true
                         } label: {
-                            Text("Ok!")
+                            Text("Start!")
                                 .font(.title3)
                                 .frame(
                                     width: portrait ? deviceWidth * 0.15 : deviceWidth * 0.2,

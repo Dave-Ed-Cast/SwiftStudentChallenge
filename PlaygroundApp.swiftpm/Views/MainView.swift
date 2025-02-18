@@ -68,7 +68,15 @@ struct MainView: View {
                         spokenHand: $spokenHand,
                         keyboardChoice: $chosenKeyboard
                     )
-                    TextField("Insert", text: $text, prompt: Text("Create your password here..."))
+                    TextField("Create your password here...", text: $text)
+                        .padding()
+                        .background(RoundedRectangle(cornerRadius: 20).fill(Color.gray.opacity(0.2)))
+                        .frame(width: deviceWidth * 0.35, height: deviceHeight * 0.08)
+                        .onChange(of: text) { newValue in
+                            if newValue.count > 20 {
+                                text = String(newValue.prefix(30))
+                            }
+                        }
                         .padding()
                     Spacer()
                 case 5:
@@ -88,7 +96,7 @@ struct MainView: View {
             if currentStep >= 3 {
                 Spacer()
             }
-            if currentStep <= stepName.count {
+            if currentStep < stepName.count {
                 Button {
                     if currentStep < Steps.stepsArray.count {
                         currentStep += 1

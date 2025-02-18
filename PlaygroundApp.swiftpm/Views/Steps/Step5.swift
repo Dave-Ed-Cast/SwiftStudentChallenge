@@ -16,25 +16,29 @@ struct Step5: View {
     @Binding var keyboardChoice: String
 
     var body: some View {
-        VStack(alignment: .center, spacing: 10) {
+        VStack(alignment: .center, spacing: 5) {
             Text("Here is what you selected so far:")
             HStack {
                 Group {
                     ShapeView(type: spokenShape, strokeColor: .blue)
-                        .frame(width: 90, height: 90)
+                        .frame(
+                            width: deviceWidth * 0.05,
+                            height: deviceWidth * 0.05
+                        )
+                    
                     Image(spokenHand).resizable()
-                        .frame(width: 150, height: 150)
+                        .frame(width: deviceWidth * 0.1, height: deviceWidth * 0.1)
                 }
                 .conditionalModifier(colorScheme == .dark) {
                     $0.colorInvert()
                 }
                 Image(keyboardChoice).resizable()
                     .frame(
-                        width: 450,
-                        height: keyboardChoice == "Traditional" ? 150 : 120
+                        width: deviceWidth * 0.25,
+                        height: keyboardChoice == "Traditional" ? deviceHeight * 0.125 : deviceHeight * 0.1
                     )
             }
-            .frame(height: deviceHeight * 0.25)
+            .frame(height: deviceHeight * 0.125)
             Text("Create it!")
                 .font(.title3)
             Text("No password will be saved in this application. This will be yours alone.")
@@ -43,5 +47,5 @@ struct Step5: View {
 }
 
 #Preview {
-    Step5(spokenShape: .constant(.circle), spokenHand: .constant("left"), keyboardChoice: .constant("Native"))
+    Step5(spokenShape: .constant(.circle), spokenHand: .constant("left"), keyboardChoice: .constant("Traditional"))
 }

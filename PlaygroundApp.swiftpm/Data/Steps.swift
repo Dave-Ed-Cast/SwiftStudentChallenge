@@ -9,28 +9,26 @@ import Foundation
 
 struct Steps {
     static let stepsArray = [
-        "Step 1: Secure the key",
-        "Step 2: Ascend from darkness",
-        "Step 3: Rain fire",
-        "Step 4: Wield an iron fist",
+        "Step 1: Find Your Perfect Key Shape",
+        "Step 2: Choose Your Strongest Hand",
+        "Step 3: Set Your Keyboard Style",
+        "Step 4: Master the Art of Adaptation",
         "Step 5: Unleash your creativity",
         "Step 6: Freedom (from technology)"
     ]
     
     static let descriptionArray = [
         //Step 1
-        "What shape do you feel most comfortable with? Once you have found it, speak it. Then, press the next button.",
+        "Imagine your password as a **shape**, a unique symbol only you understand. Choose from these, close your eyes and picture it. Then say it out loud. Ready? Then press next.",
         //Step 2
-        "Every person has input preference. Do you feel more comfortable using your left or your right hand? Speak your preference",
+        "Every artist has a dominant hand; so does every password creator! Do you feel more comfortable using your left or right hand? Say it aloud—this choice will shape how you interact with your digital key.",
         //Step 3
-        "While based on QWERTY, any keyboard layout will work. Which keyboard are you using? Express your preference to improve effectiveness!",
+        "Not all keyboards are the same, and neither are their masters. Whether it’s QWERTY, AZERTY, or Dvorak, your layout is part of your secret formula. Speak your keyboard preference to refine your password-building experience.",
         //Step 4
-        "While we asked you to express your preference, once you learn the method you can apply it to every keyboard, so do not worry!",
+        "The best password creators can adapt anywhere. While you’ve set your preferences, your method works on any keyboard! Flexibility is your power, so don’t worry, you’re ready for anything.",
         //Step 5
-        "Finally it is time to unleash your creativity! Remember the shape, the hand preference, and most importantly, remember to have fun! Also, don't forget every password should contain speicial characters, numbers and uppercases for safety reasons",
+        "Now, let’s bring it all together! Unleash your creativity, have fun with it! Mix in uppercase letters, numbers, and special characters to make your password an unbreakable masterpiece.",
         //Step 6
-        "This is the final step. You are now free to create your own password however strong you want it to be, and easy to remember!",
-        //Step 7
-        "Do you wish to join multiple shapes? It is suggested to keep it simple for starters"
+        "You’ve mastered the technique. Feel free to go back and explore new possibiltiies!"
     ]
 }

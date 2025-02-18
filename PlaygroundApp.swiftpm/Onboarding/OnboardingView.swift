@@ -31,37 +31,24 @@ struct OnboardingView: View {
                 TabView {
                     OnboardingViewModel(
                         onboardingComplete: $onboarding.completed,
-                        title: "The concept of password strength",
-                        bodyText: "Automatic generated passwords are good! They are strong, memorable one blends uppercase, lowercase, numbers, and symbols (at least 10 characters)."
+                        title: "Meet Your Digital Key",
+                        bodyText: "Imagine your password as a key to a secret vault. The stronger it is, the safer your treasures (data) stay. A great key isn’t just long, it’s unique! Mobile, external or traditional keyboard? Your password will be easy to remember and still safe."
                     )
                     OnboardingViewModel(
                         onboardingComplete: $onboarding.completed,
-                        title: "Why would I need this?",
-                        bodyText: "Face ID/Touch ID is convenient, but what if it doesn't work? Complex passwords can be tough to remember. To make this work better we are going to ask for you to interact with your voice for different steps."
+                        title: "What If Your Key Gets Stuck?",
+                        bodyText: "Face ID and Touch ID are like magic doors—fast and seamless. But what if they don’t open? A strong password is your backup key, always ready. To make things even smoother, we’ll guide you through a voice-assisted setup."
                     )
                     OnboardingViewModel(
                         onboardingComplete: $onboarding.completed,
-                        title: "The best experience",
-                        bodyText: "Works on all keyboards, but an external one helps adapt your password to every occasion! ",
+                        title: "Tailor Your Key for Every Door",
+                        bodyText: "Just like a master key works everywhere, a well designed password adapts to any keyboard. Let’s build one that blends letters, numbers, and symbols effortlessly. Ready to secure your digital world? Let’s do it!",
                         showDoneButton: true
                     )
                 }
                 .environmentObject(onboarding)
                 .tabViewStyle(.page(indexDisplayMode: .automatic))
                 .indexViewStyle(.page(backgroundDisplayMode: .always))
-            }
-        }
-        .conditionalModifier(welcomeShouldGoUp) {
-            $0.overlay(alignment: .topTrailing) {
-                Button {
-                    withAnimation {
-                        onboarding.skip()
-                    }
-                } label: {
-                    Text("Skip")
-                }
-                .buttonBorderShape(.automatic)
-                .padding()
             }
         }
         .padding()

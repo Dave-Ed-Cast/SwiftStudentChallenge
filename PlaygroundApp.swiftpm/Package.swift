@@ -8,13 +8,13 @@ import PackageDescription
 import AppleProductTypes
 
 let package = Package(
-    name: "PlaygroundApp",
+    name: "KeyShape",
     platforms: [
         .iOS("16.0")
     ],
     products: [
         .iOSApplication(
-            name: "PlaygroundApp",
+            name: "KeyShape",
             targets: ["AppModule"],
             bundleIdentifier: "com.Dave.jjjiii",
             teamIdentifier: "WLW428B75Y",
@@ -27,10 +27,8 @@ let package = Package(
                 .phone
             ],
             supportedInterfaceOrientations: [
-                .portrait,
                 .landscapeRight,
-                .landscapeLeft,
-                .portraitUpsideDown(.when(deviceFamilies: [.pad]))
+                .landscapeLeft
             ],
             capabilities: [
                 .microphone(purposeString: "We ask to use the microphone to improve user experience and allowing the selection of your preference."),

@@ -28,7 +28,7 @@ struct Step3: View {
                     Text("Native").font(.headline)
                 }
             }
-            .conditionalModifier(colorScheme == .dark) {
+            .if(colorScheme == .dark) {
                 $0.colorInvert()
             }
             .frame(

@@ -16,14 +16,18 @@ struct Step2: View {
     var body: some View {
         VStack {
             Text(spokenHand != "none" ? "I heard: \(spokenHand)" : "Say one of the hands")
-            HStack {
-                Image("left").resizable()
+            HStack(spacing: 15) {
+                Image("left")
+                    .resizable()
                     .border(spokenHand == "left" ? Color.blue : Color.clear, width: 5)
-                Image("right").resizable()
+                    .frame(width: deviceWidth * 0.15, height: deviceHeight * 0.2)
+                Image("right")
+                    .resizable()
                     .border(spokenHand == "right" ? Color.blue : Color.clear, width: 5)
-                
+                    .frame(width: deviceWidth * 0.15, height: deviceHeight * 0.2)
             }
-            .conditionalModifier(colorScheme == .dark) {
+            
+            .if(colorScheme == .dark) {
                 $0.colorInvert()
             }
             .onAppear {
@@ -39,7 +43,7 @@ struct Step2: View {
                     }
                 }
             }
-            .frame(width: 400, height: 200)
+            
             .padding()
         }
     }

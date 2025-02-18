@@ -27,7 +27,7 @@ struct Steps {
         //Step 4
         "The best password creators can adapt anywhere. While you’ve set your preferences, your method works on any keyboard! Flexibility is your power, so don’t worry, you’re ready for anything.",
         //Step 5
-        "Now, let’s bring it all together! Unleash your creativity, have fun with it! Mix in uppercase letters, numbers, and special characters to make your password an unbreakable masterpiece.",
+        "Create it! No password will be saved in this application. This will be yours alone.",
         //Step 6
         "You’ve mastered the technique. Feel free to go back and explore new possibiltiies!"
     ]

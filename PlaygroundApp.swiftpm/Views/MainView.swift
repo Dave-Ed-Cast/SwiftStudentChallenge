@@ -40,11 +40,13 @@ struct MainView: View {
     var body: some View {
         VStack {
             VStack(spacing: 30) {
-                Text(stepName[currentStep])
-                    .font(.largeTitle)
-                Text(stepDescription[currentStep])
-                    .font(.title2)
-                
+                Group {
+                    Text(stepName[currentStep])
+                        .font(.largeTitle)
+                    Text(stepDescription[currentStep])
+                        .font(.title2)
+                }
+                .frame(height: deviceHeight * 0.07)
                 if currentStep >= 3 {
                     Spacer()
                 }
@@ -71,9 +73,9 @@ struct MainView: View {
                     TextField("Create your password here...", text: $text)
                         .padding()
                         .background(RoundedRectangle(cornerRadius: 20).fill(Color.gray.opacity(0.2)))
-                        .frame(width: deviceWidth * 0.35, height: deviceHeight * 0.08)
+                        .frame(width: deviceWidth * 0.35, height: deviceHeight * 0.06)
                         .onChange(of: text) { newValue in
-                            if newValue.count > 20 {
+                            if newValue.count > 30 {
                                 text = String(newValue.prefix(30))
                             }
                         }
@@ -130,4 +132,8 @@ struct MainView: View {
         
         .padding()
     }
+}
+
+#Preview {
+    MainView()
 }

@@ -16,7 +16,7 @@ let package = Package(
         .iOSApplication(
             name: "KeyShape",
             targets: ["AppModule"],
-            bundleIdentifier: "com.Dave.jjjiii",
+            bundleIdentifier: "com.Dave.test4",
             teamIdentifier: "WLW428B75Y",
             displayVersion: "1.0",
             bundleVersion: "1",

@@ -29,12 +29,21 @@ struct MethodListView: View {
 
                     }
                     .swipeActions {
+                        
+                        Button(role: .destructive) {
+                            methodHolder.deleteShape(shape)
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                        }
+                        .tint(.red)
+                        
                         Button {
                             renameShape(shape)
                         } label: {
                             Label("Rename", systemImage: "pencil")
                         }
                         .tint(.orange)
+                       
                     }
                 }
                 .onDelete(perform: deleteShape)
@@ -46,16 +55,18 @@ struct MethodListView: View {
             
         }
         .overlay(alignment: .topTrailing) {
-            Button {
-                withAnimation {
-                    view.value = .createPassword
+            Group {
+                Button {
+                    withAnimation {
+                        view.value = .createPassword
+                    }
+                } label: {
+                    Text("Create")
+                        .foregroundStyle(.blue)
                 }
-            } label: {
-                Text("Create")
-                    .foregroundStyle(.blue)
             }
-            .padding()
         }
+        
     }
     
     private func renameShape(_ shape: ShapeEntry) {
@@ -70,7 +81,6 @@ struct MethodListView: View {
             }
         })
         
-        // Show Alert (Requires UIKit bridge)
         if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
            let rootViewController = windowScene.windows.first?.rootViewController {
             rootViewController.present(alert, animated: true)
@@ -87,5 +97,8 @@ struct MethodListView: View {
 
 #Preview {
     MethodListView()
+        .onAppear {
+            addShape(side: "left", shapeType: <#T##ShapeView.ShapeType#>, name: <#T##String#>)
+        }
         .environmentObject(MethodHolder())
 }

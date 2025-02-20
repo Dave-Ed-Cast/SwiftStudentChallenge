@@ -10,7 +10,6 @@ import SwiftUI
 struct MainView: View {
     
     @EnvironmentObject private var view: Navigation
-    @EnvironmentObject private var audioManager: AudioManager
     @EnvironmentObject private var methodHolder: MethodHolder
     
     @State private var currentStep: Int = 0
@@ -19,8 +18,6 @@ struct MainView: View {
     @State private var shape: ShapeView.ShapeType = .unknown
     @State private var text = ""
     
-    
-    let audioRequired: Bool
     let lastStep = Steps.stepsArray.count
     
     var isButtonDisabled: Bool {
@@ -48,15 +45,11 @@ struct MainView: View {
                 switch currentStep {
                 case 0:
                     Step1(chosenShape: $shape)
-                        .environmentObject(audioManager)
                 case 1:
                     Step2(hand: $hand)
-                        .environmentObject(audioManager)
                 case 2:
                     Step3(shape: $shape)
-                    if !audioRequired {
-                        Spacer()
-                    }
+                    Spacer()
                 case 3:
                     Step4(shape: $shape, hand: $hand)
                     TextField("Create your password here...", text: $text)
@@ -80,12 +73,7 @@ struct MainView: View {
             
             .multilineTextAlignment(.center)
             
-            if currentStep < lastStep - 4 && audioRequired {
-                AudioFeedback()
-                    .frame(width: deviceWidth * 0.4, height: deviceHeight * 0.2)
-            } else {
-                Spacer()
-            }
+            Spacer()
             
             
             Button {
@@ -125,5 +113,5 @@ struct MainView: View {
 }
 
 #Preview {
-    MainView(audioRequired: false)
+    MainView()
 }

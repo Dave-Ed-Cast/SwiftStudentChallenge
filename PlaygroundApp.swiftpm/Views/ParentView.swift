@@ -11,7 +11,6 @@ struct ParentView: View {
     
     @EnvironmentObject private var navigation: Navigation
     
-    @StateObject private var audioManager: AudioManager = .init()
     @StateObject private var methodHolder: MethodHolder = .init()
     
     @State private var audioNotRequired = true
@@ -26,14 +25,13 @@ struct ParentView: View {
                     .environmentObject(methodHolder)
                 
             case .createPassword:
-                MainView(audioRequired: audioManager.audioRequired)
+                MainView()
                     .environmentObject(navigation)
                     .environmentObject(methodHolder)
-                    .environmentObject(audioManager)
             }
         }
         .onAppear {
-            methodHolder.loadFromJSON() // Ensure data is loaded before checking
+            methodHolder.loadFromJSON()
                 if methodHolder.shapes.isEmpty {
                     print("had to go to creation!")
                     navigation.value = .createPassword

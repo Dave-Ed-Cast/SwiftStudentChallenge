@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct Step1: View {
-    
-    @EnvironmentObject private var audioManager: AudioManager
-    
+        
     @Binding var chosenShape: ShapeView.ShapeType
     
     @State private var recognizedText: String = ""
@@ -45,27 +43,6 @@ struct Step1: View {
             
         }
         .padding()
-        .onAppear {
-            audioManager.onTextUpdate = { text in
-                DispatchQueue.main.async {
-                    if let lastWord = text.split(separator: " ").last {
-                        self.recognizedText = String(lastWord)
-                        
-                        switch lastWord.lowercased() {
-                        case "circle":
-                            chosenShape = .circle
-                        case "square":
-                            chosenShape = .square
-                        case "triangle":
-                            chosenShape = .triangle
-                        default:
-                            chosenShape = .unknown
-                            recognizedText = "Not one of the shapes"
-                        }
-                    }
-                }
-            }
-        }
     }
     
     private func labelForShape(_ shape: ShapeView.ShapeType) -> String {

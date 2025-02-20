@@ -9,7 +9,6 @@ import SwiftUI
 
 struct Step2: View {
     
-    @EnvironmentObject private var audioManager: AudioManager
     @Environment(\.colorScheme) private var colorScheme
     
     @Binding var hand: String
@@ -47,19 +46,6 @@ struct Step2: View {
             .if(colorScheme == .dark) {
                 $0.colorInvert()
             }
-            .onAppear {
-                let audioManager = AudioManager()
-                audioManager.onTextUpdate = { text in
-                    DispatchQueue.main.async {
-                        if let lastWord = text.split(separator: " ").last {
-                            let lastWordString = String(lastWord).lowercased()
-                            if lastWordString == "left" || lastWordString == "right" {
-                                self.hand = lastWordString
-                            }
-                        }
-                    }
-                }
-            }            
         }
         .padding()
     }

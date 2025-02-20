@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct Step1: View {
-        
+    
     @Binding var chosenShape: ShapeView.ShapeType
     
     @State private var recognizedText: String = ""
@@ -18,29 +18,31 @@ struct Step1: View {
     var body: some View {
         
         VStack {
-            Text(recognizedText != "" ? "I heard: \(recognizedText)" : "Say one of the shapes below")
+            Spacer()
+            Text(recognizedText != "" ? "You picked: \(recognizedText)" : "Pick one of the shapes below")
                 .accessibilityHint("Between circle, triangle and square choose or speak one")
                 .font(.headline)
                 .padding()
             
-            HStack(spacing: 30) {
+            HStack(spacing: 0) {
                 ForEach(shapeTypes, id: \.self) { shape in
                     ShapeView(type: shape, strokeColor: shape == chosenShape ? .blue : .primary)
-                        
+                    
                         .onTapGesture {
                             chosenShape = shape
                             recognizedText = String("\(shape)")
                         }
+                        .padding()
                         .accessibilityAddTraits(.isButton)
                         .accessibilityLabel(labelForShape(shape))
                         .accessibilityAction {
                             chosenShape = shape
                             recognizedText = String("\(shape)")
                         }
-                        .frame(width: 100, height: 100)
+                        .frame(width: deviceWidth * 0.11, height: deviceWidth * 0.11)
                 }
             }
-            
+            Spacer()
         }
         .padding()
     }

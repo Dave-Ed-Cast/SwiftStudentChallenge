@@ -16,6 +16,7 @@ struct Step3: View {
     
     var body: some View {
         VStack {
+            Spacer()
             Text("A possible password using this method: \(possiblePasswords.currentPassword)")
                 .onAppear {
                     possiblePasswords.updateShape(to: shape)
@@ -37,6 +38,7 @@ struct Step3: View {
             .accessibilityLabel("")
             .accessibilityHint("Imagine the \(shape) you selected being typed on this keyboard for the next step.")
             .frame(width: deviceWidth * 0.6)
+            Spacer()
         }
         .padding()
     }

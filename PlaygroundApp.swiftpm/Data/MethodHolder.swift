@@ -1,11 +1,5 @@
-//
-//  MethodHolder.swift
-//  KeyShape
-//
-//  Created by Davide Castaldi on 20/02/25.
-//
-
 import Foundation
+import CryptoKit
 
 struct ShapeEntry: Codable, Identifiable {
     let id: UUID
@@ -22,6 +16,17 @@ final class MethodHolder: ObservableObject {
         return directory.appendingPathComponent("shapes.json")
     }
     
+    
+    private var key: SymmetricKey {
+        if let keyData = UserDefaults.standard.data(forKey: "encryptionKey") {
+            return SymmetricKey(data: keyData)
+        } else {
+            let newKey = SymmetricKey(size: .bits256)
+            let newKeyData = newKey.withUnsafeBytes { Data($0) }
+            UserDefaults.standard.set(newKeyData, forKey: "encryptionKey")
+            return newKey
+        }
+    }
     init() {
         loadFromJSON()
     }
@@ -29,7 +34,9 @@ final class MethodHolder: ObservableObject {
     func saveToJSON() {
         do {
             let jsonData = try JSONEncoder().encode(shapes)
-            try jsonData.write(to: fileURL)
+            if let encryptedData = encrypt(jsonData) {
+                try encryptedData.write(to: fileURL)
+            }
         } catch {
             print("Error saving JSON: \(error)")
         }
@@ -37,10 +44,14 @@ final class MethodHolder: ObservableObject {
     
     func loadFromJSON() {
         do {
-            let jsonData = try Data(contentsOf: fileURL)
-            let decodedShapes = try JSONDecoder().decode([ShapeEntry].self, from: jsonData)
+            let encryptedData = try Data(contentsOf: fileURL)
+            if let decryptedData = decrypt(encryptedData) {
+                let decodedShapes = try JSONDecoder().decode([ShapeEntry].self, from: decryptedData)
                 self.shapes = decodedShapes
-            
+                
+            } else {
+                print("Failed to decrypt data.")
+            }
         } catch {
             print("Error loading JSON: \(error)")
         }
@@ -62,6 +73,26 @@ final class MethodHolder: ObservableObject {
         if let index = shapes.firstIndex(where: { $0.id == id }) {
             shapes[index].name = newName
             saveToJSON()
+        }
+    }
+    
+    private func encrypt(_ data: Data) -> Data? {
+        do {
+            let sealedBox = try AES.GCM.seal(data, using: key)
+            return sealedBox.combined
+        } catch {
+            print("Encryption Error: \(error)")
+            return nil
+        }
+    }
+    
+    private func decrypt(_ data: Data) -> Data? {
+        do {
+            let sealedBox = try AES.GCM.SealedBox(combined: data)
+            return try AES.GCM.open(sealedBox, using: key)
+        } catch {
+            print("Decryption Error: \(error)")
+            return nil
         }
     }
 }

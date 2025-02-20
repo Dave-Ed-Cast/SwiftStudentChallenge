@@ -23,7 +23,7 @@ struct StepNamesView: View {
     }
     
     private func formattedDescription(for text: String) -> Text {
-        let keywords = ["password", "keyboard", "preferences", "creativity", "technique", "shape", "hand", "press it", "say it", "keyboards", "every keyboard"]
+        let keywords = ["password", "keyboard", "preferences", "creativity", "technique", "shape", "hand", "press it", "say it", "keyboards", "every keyboard", "determine"]
         
         var formattedText = Text("")
         let words = text.components(separatedBy: " ")

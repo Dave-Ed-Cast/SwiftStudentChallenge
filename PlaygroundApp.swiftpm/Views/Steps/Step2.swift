@@ -15,7 +15,8 @@ struct Step2: View {
     
     var body: some View {
         VStack {
-            Text(hand != "none" ? "I heard: \(hand)" : "Say one of the hands")
+            Spacer()
+            Text(hand != "none" ? "You picked: \(hand)" : "Pick one of the hands")
                 .accessibilityHint("Choose between left or right hand by tapping or speaking the name.")
 
             HStack(spacing: 15) {
@@ -46,6 +47,7 @@ struct Step2: View {
             .if(colorScheme == .dark) {
                 $0.colorInvert()
             }
+            Spacer()
         }
         .padding()
     }

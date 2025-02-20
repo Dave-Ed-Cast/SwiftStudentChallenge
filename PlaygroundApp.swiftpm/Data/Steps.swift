@@ -18,14 +18,14 @@ struct Steps {
     
     static let descriptionArray = [
         //Step 1
-        "Imagine your password as a shape, a unique symbol only you understand. Choose from these, picture it. When you are ready, either press it or say it. Then, press next.",
+        "Imagine your password as a shape, a unique symbol only you understand. Choose from these, picture it. When you are ready, select it and press next.",
         //Step 2
-        "Every artist has a dominant hand; so does every password creator! Do you feel more comfortable using your left or right? This choice will determine how you interact with your digital key.",
+        "Everyone has a dominant hand! Pick yours. This will determine the interaction with your digital key.",
         //Step 3
-        "Not all keyboards are the same, and neither are their masters. Whether it’s QWERTY, AZERTY, or Dvorak, your layout is part of your secret formula. Select your preference to refine your password-building experience.",
+        "Whether it’s QWERTY, AZERTY, or Dvorak, your layout is part of your secret formula!",
         //Step 4
-        "Create it! No password will be saved in this application. This will be yours alone.",
+        "Time to test it to your heart content!",
         //Step 5
-        "You’ve mastered the technique. Feel free to go back and explore new possibiltiies!"
+        "You’ve mastered the technique!"
     ]
 }

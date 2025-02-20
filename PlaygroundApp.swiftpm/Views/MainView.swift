@@ -35,9 +35,10 @@ struct MainView: View {
     
     var body: some View {
         VStack {
-            VStack(spacing: 30) {
+            VStack(spacing: 10) {
                 StepNamesView(currentStep: currentStep)
                     .frame(height: deviceHeight * 0.07)
+                
                 
                 if currentStep >= lastStep - 3 {
                     Spacer()

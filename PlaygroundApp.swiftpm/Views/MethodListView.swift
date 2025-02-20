@@ -16,18 +16,19 @@ struct MethodListView: View {
         NavigationStack {
             List {
                 ForEach(methodHolder.shapes) { shape in
-                    HStack(spacing: 30) {
+                    HStack(spacing: 20) {
                         Text(shape.side)
                             .font(.headline)
-                        
+                            .frame(width: deviceWidth * 0.04)
                         ShapeView(type: shape.shapeType, strokeColor: .blue)
                             .frame(width: deviceWidth * 0.04, height: deviceWidth * 0.04)
                         
                         Text(shape.name)
                             .font(.caption)
                             .foregroundColor(.gray)
-
+                        
                     }
+                    
                     .swipeActions {
                         
                         Button(role: .destructive) {
@@ -43,7 +44,7 @@ struct MethodListView: View {
                             Label("Rename", systemImage: "pencil")
                         }
                         .tint(.orange)
-                       
+                        
                     }
                 }
                 .onDelete(perform: deleteShape)
@@ -55,17 +56,17 @@ struct MethodListView: View {
             
         }
         .overlay(alignment: .topTrailing) {
-            Group {
-                Button {
-                    withAnimation {
-                        view.value = .createPassword
-                    }
-                } label: {
-                    Text("Create")
-                        .foregroundStyle(.blue)
+            Button {
+                withAnimation {
+                    view.value = .createPassword
                 }
+            } label: {
+                Text("Create")
+                    .padding()
+                    .foregroundStyle(.blue)
             }
         }
+        
         
     }
     
@@ -94,11 +95,18 @@ struct MethodListView: View {
         }
     }
 }
-
 #Preview {
-    MethodListView()
-        .onAppear {
-            addShape(side: "left", shapeType: <#T##ShapeView.ShapeType#>, name: <#T##String#>)
-        }
-        .environmentObject(MethodHolder())
+    let methodHolder = MethodHolder()
+    
+    methodHolder.shapes = [
+        ShapeEntry(id: UUID(), side: "left", shapeType: .circle, name: "default"),
+        ShapeEntry(id: UUID(), side: "right", shapeType: .circle, name: "default"),
+        ShapeEntry(id: UUID(), side: "left", shapeType: .square, name: "default"),
+        ShapeEntry(id: UUID(), side: "right", shapeType: .square, name: "default"),
+        ShapeEntry(id: UUID(), side: "left", shapeType: .triangle, name: "default"),
+        ShapeEntry(id: UUID(), side: "right", shapeType: .triangle, name: "default"),
+        
+    ]
+    
+    return MethodListView().environmentObject(methodHolder)
 }

@@ -11,7 +11,7 @@ struct ShapeView: View {
     let type: ShapeType
     let strokeColor: Color
     
-    enum ShapeType {
+    enum ShapeType: String, Codable {
         case circle, triangle, square, unknown
     }
     

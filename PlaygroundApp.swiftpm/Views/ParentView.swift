@@ -11,18 +11,23 @@ struct ParentView: View {
     
     @EnvironmentObject private var navigation: Navigation
     @StateObject private var audioManager: AudioManager = .init()
+    @StateObject private var metodHolder: MethodHolder = .init()
     
     @State private var audioNotRequired = true
 
     var body: some View {
         ZStack {
             switch navigation.value {
+            case .list:
+                MethodListView()
+                    .environmentObject(navigation)
+                    .environmentObject(metodHolder)
+                
             case .createPassword:
                 MainView(audioRequired: audioManager.audioRequired)
                     .environmentObject(navigation)
-            case .reload:
-                ReloadMainView()
-                    .environmentObject(navigation)
+                    .environmentObject(metodHolder)
+                
             }
         }
     }

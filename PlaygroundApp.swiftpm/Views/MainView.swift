@@ -11,6 +11,8 @@ struct MainView: View {
         
     @EnvironmentObject private var view: Navigation
     
+    @StateObject private var methodHolder: MethodHolder = .init()
+    
     @State private var currentStep: Int = 0
     @State private var phase: CGFloat = 0
     @State private var hand: String = "none"
@@ -40,7 +42,7 @@ struct MainView: View {
                 StepNamesView(currentStep: currentStep)
                     .frame(height: deviceHeight * 0.07)
                 
-                if currentStep >= lastStep - 4 {
+                if currentStep >= lastStep - 3 {
                     Spacer()
                 }
                 switch currentStep {
@@ -79,15 +81,15 @@ struct MainView: View {
                 Spacer()
             }
             
-            if currentStep < lastStep - 1 {
+           
                 Button {
-                    if currentStep < Steps.stepsArray.count {
+                    if currentStep < Steps.stepsArray.count - 1 {
                         withAnimation {
                             currentStep += 1
                         }
                     } else {
                         withAnimation {
-                            view.value = .reload
+                            view.value = .list
                         }
                     }
                 } label: {
@@ -107,7 +109,10 @@ struct MainView: View {
                 }
                 .disabled(isButtonDisabled)
                 .opacity(isButtonDisabled ? 0.5 : 1)
-            }
+            
+        }
+        .onDisappear {
+            methodHolder.addShape(name: hand, shapeType: shape)
         }
         .padding()
     }

@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum NavigationValue {
-    case createPassword, reload
+    case createPassword, list
 }
 
 class Navigation: ObservableObject {

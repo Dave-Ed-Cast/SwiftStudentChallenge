@@ -12,11 +12,13 @@ struct Step3: View {
     @Binding var shape: ShapeView.ShapeType
     
     @StateObject private var possiblePasswords = PossiblePasswords()
+    @State private var xOffset: CGFloat = 0
     
     var body: some View {
         VStack {
             Text("A possible password using this method: \(possiblePasswords.currentPassword)")
                 .onAppear {
+                    possiblePasswords.updateShape(to: shape)
                     possiblePasswords.startCycling()
                 }
             
@@ -29,23 +31,25 @@ struct Step3: View {
                     shapeIndex: 0,
                     cycle: true
                 )
-                .frame(
-                    width: deviceOrientation.isPortrait ? 130 : 160,
-                    height: deviceOrientation.isPortrait ? 130 : 150
-                )
+                .frame(width: 160, height: 150)
                 .offset(y: -deviceHeight * 0.025)
             }
             .accessibilityLabel("")
             .accessibilityHint("Imagine the \(shape) you selected being typed on this keyboard for the next step.")
             .frame(width: deviceWidth * 0.6)
         }
-        .onChange(of: shape) { newShape in
-            possiblePasswords.updateShape(to: newShape)
-        }
         .padding()
     }
 }
 
-#Preview {
+#Preview("triangle") {
     Step3(shape: .constant(.triangle))
+}
+
+#Preview("circle") {
+    Step3(shape: .constant(.circle))
+}
+
+#Preview("square") {
+    Step3(shape: .constant(.square))
 }

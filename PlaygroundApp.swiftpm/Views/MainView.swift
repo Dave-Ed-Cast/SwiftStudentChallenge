@@ -40,7 +40,7 @@ struct MainView: View {
                 StepNamesView(currentStep: currentStep)
                     .frame(height: deviceHeight * 0.07)
                 
-                if currentStep >= 3 {
+                if currentStep >= lastStep - 4 {
                     Spacer()
                 }
                 switch currentStep {
@@ -52,42 +52,43 @@ struct MainView: View {
                     Step3(shape: $shape)
                 case 3:
                     Step4(shape: $shape, hand: $hand)
-                    Spacer()
-                case 4:
-                    Step5()
-                    
                     TextField("Create your password here...", text: $text)
                         .padding()
                         .background(RoundedRectangle(cornerRadius: 20).fill(Color.gray.opacity(0.2)))
-                        .frame(width: deviceWidth * 0.35, height: deviceHeight * 0.06)
+                        .frame(width: deviceWidth * 0.35, height: deviceHeight * 0.05)
                         .onChange(of: text) { newValue in
                             if newValue.count > 30 {
                                 text = String(newValue.prefix(30))
                             }
                         }
-                        .padding()
                     Spacer()
+                case 4:
+                    Step5()
+                    Spacer()
+                    
                 default:
                     EmptyView()
                 }
             }
-            
             .multilineTextAlignment(.center)
             
-            if currentStep < 3 && audioRequired {
+            if currentStep < lastStep - 4 && audioRequired {
                 AudioFeedback()
                     .frame(width: deviceWidth * 0.4, height: deviceHeight * 0.2)
             } else {
                 Spacer()
             }
             
-            if currentStep >= 3 {
-                Spacer()
-            }
             if currentStep < lastStep - 1 {
                 Button {
                     if currentStep < Steps.stepsArray.count {
-                        currentStep += 1
+                        withAnimation {
+                            currentStep += 1
+                        }
+                    } else {
+                        withAnimation {
+                            view.value = .reload
+                        }
                     }
                 } label: {
                     ZStack {
@@ -106,19 +107,6 @@ struct MainView: View {
                 }
                 .disabled(isButtonDisabled)
                 .opacity(isButtonDisabled ? 0.5 : 1)
-            } else {
-                Button {
-                    view.value = .reload
-                } label: {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 20)
-                            .foregroundStyle(.blue)
-                        Text("Try again?")
-                            .foregroundStyle(.white)
-                            .font(.title2)
-                    }
-                }
-                .frame(width: deviceWidth * 0.2, height: deviceHeight * 0.075)
             }
         }
         .padding()

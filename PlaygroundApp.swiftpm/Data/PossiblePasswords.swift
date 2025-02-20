@@ -13,60 +13,55 @@ class PossiblePasswords: ObservableObject {
     @Published var currentPassword: String = ""
     
     private let circleCombinations: [String] = [
-        "Wazxdew",
+        "Esxcfre",
         "Tfvbhy",
         "Ijm,lo"
     ]
     
     private let triangleCombinations: [String] = [
         "Eszxcde",
-        "Ygvbnmjy",
-        "Okm,.lo"
+        "Tfcvbgt",
+        "Ijnm,ku"
     ]
     
     private let squareCombinations: [String] = [
-        "Wqazxcdew",
-        "Tgbnmjuy",
+        "Wsxcvfre",
+        "Rfvbnhyt",
         "Ujm,.loi"
     ]
     
     private var chosenShape: ShapeView.ShapeType
-    private var task: Task<Void, Never>?  // Store and cancel cycling
+    private var task: Task<Void, Never>?
     
     init(chosenShape: ShapeView.ShapeType = .circle) {
         self.chosenShape = chosenShape
         self.currentPassword = requiredPasswords().first ?? ""
-        Task {
-            try? await Task.sleep(for: .seconds(2.5)) 
-            startCycling()
-        }
     }
     
-    /// Starts cycling passwords every 2.5 seconds, ensuring only one cycle runs at a time.
     func startCycling() {
-        task?.cancel() // Cancel any existing task
+        task?.cancel()
         
         task = Task {
             let passwords = requiredPasswords()
             
             while !Task.isCancelled {
+                try? await Task.sleep(for: .seconds(2.5))
                 await MainActor.run {
                     self.currentIndex = (self.currentIndex + 1) % passwords.count
                     self.currentPassword = passwords[self.currentIndex]
                 }
-                try? await Task.sleep(nanoseconds: 2_500_000_000) // Sleep for 2.5 seconds
+                
             }
         }
     }
     
-    /// Updates the shape and resets cycling, ensuring previous cycles stop before restarting.
     func updateShape(to newShape: ShapeView.ShapeType) {
         if newShape != chosenShape {
-            task?.cancel() // Stop current cycle before changing shape
+            task?.cancel()
             chosenShape = newShape
-            currentIndex = 0 // Reset index
+            currentIndex = 0
             currentPassword = requiredPasswords().first ?? ""
-            startCycling() // Restart cycling with new passwords
+            startCycling()
         }
     }
     
@@ -84,6 +79,14 @@ class PossiblePasswords: ObservableObject {
     }
 }
 
-#Preview {
+#Preview("triangle") {
+    Step3(shape: .constant(.triangle))
+}
+
+#Preview("square") {
+    Step3(shape: .constant(.square))
+}
+
+#Preview("circle") {
     Step3(shape: .constant(.circle))
 }

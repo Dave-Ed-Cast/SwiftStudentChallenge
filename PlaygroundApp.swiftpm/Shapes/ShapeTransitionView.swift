@@ -11,19 +11,24 @@ struct ShapeTransitionView: View {
     
     @Binding var spokenShape: ShapeView.ShapeType
     
-    @State private var xPositionIndex: Int = 0
-    @State private var currentOffset: CGFloat = 20
+    @State private var xPositionIndex: Int = 1
+    @State private var currentOffset: CGFloat = -15
     @State var shapeIndex: Int = 0
     @State var cycle: Bool = false
     
     let shapeTypes: [ShapeView.ShapeType] = [.circle, .triangle, .square]
     
     var body: some View {
-        let xOffsets: [CGFloat] = [-deviceWidth * 0.15, 20, deviceWidth * 0.155]
+        let xOffsets: [CGFloat] = [
+            spokenShape != .triangle ? -deviceWidth * 0.1 : -deviceWidth * 0.12,
+            spokenShape != .triangle ? -10 : -30,
+            spokenShape != .triangle ? deviceWidth * 0.13 : deviceWidth * 0.12
+        ]
         
             ShapeView(type: spokenShape, strokeColor: cycle ? .red : .primary)
                 .offset(x: currentOffset)
                 .onAppear {
+                    currentOffset = xOffsets.first!
                     Task {
                         while true {
                             try? await Task.sleep(for: .seconds(2.5))
@@ -32,7 +37,7 @@ struct ShapeTransitionView: View {
                                     currentOffset = xOffsets[xPositionIndex]
                                     xPositionIndex = (xPositionIndex + 1) % xOffsets.count
                                 } else {
-                                    currentOffset = 20
+                                    currentOffset = -15
                                 }
                             }
                         }

@@ -1,5 +1,5 @@
 //
-//  Uniforms.swift
+//  Coordinator.swift
 //  PlaygroundApp
 //
 //  Created by Davide Castaldi on 16/02/25.
@@ -13,7 +13,8 @@ fileprivate struct Uniforms {
     var frequency: Float
 }
 
-final class Coordinator: NSObject, MTKViewDelegate {
+final class Coordinator: NSObject, MTKViewDelegate, ObservableObject {
+
     var device: MTLDevice!
     var commandQueue: MTLCommandQueue!
     var pipelineState: MTLRenderPipelineState!
@@ -26,7 +27,6 @@ final class Coordinator: NSObject, MTKViewDelegate {
     var uniformBuffer: MTLBuffer!
     
     var audioManager = AudioManager()
-
     
     override init() {
         super.init()

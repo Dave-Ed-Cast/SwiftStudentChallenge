@@ -1,5 +1,5 @@
 //
-//  OnboardingParameters.swift
+//  Onboarding.swift
 //  PlaygroundApp
 //
 //  Created by Davide Castaldi on 06/02/25.

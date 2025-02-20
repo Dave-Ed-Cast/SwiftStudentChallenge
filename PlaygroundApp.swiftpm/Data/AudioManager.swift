@@ -8,7 +8,9 @@
 import Speech
 import AVFoundation
 
-class AudioManager: NSObject, AVAudioRecorderDelegate, SFSpeechRecognizerDelegate {
+class AudioManager: NSObject, AVAudioRecorderDelegate, SFSpeechRecognizerDelegate, ObservableObject {
+    
+    @Published var audioRequired: Bool = false
     var audioRecorder: AVAudioRecorder!
     var speechRecognizer = SFSpeechRecognizer()
     var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
@@ -31,9 +33,11 @@ class AudioManager: NSObject, AVAudioRecorderDelegate, SFSpeechRecognizerDelegat
         AVAudioSession.sharedInstance().requestRecordPermission { granted in
             DispatchQueue.main.async {
                 if granted {
+                    self.audioRequired = true
                     self.setupRecorder()
                     completion()
                 } else {
+                    self.audioRequired = false
                     print("Microphone permission denied")
                 }
             }

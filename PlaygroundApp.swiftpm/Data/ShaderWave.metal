@@ -1,5 +1,5 @@
 //
-//  File.metal
+//  ShaderWave.metal
 //  PlaygroundApp
 //
 //  Created by Davide Castaldi on 15/02/25.

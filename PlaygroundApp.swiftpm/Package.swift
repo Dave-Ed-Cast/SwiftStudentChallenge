@@ -16,7 +16,7 @@ let package = Package(
         .iOSApplication(
             name: "KeyShape",
             targets: ["AppModule"],
-            bundleIdentifier: "com.Dave.test4",
+            bundleIdentifier: "com.Dave.test5",
             teamIdentifier: "WLW428B75Y",
             displayVersion: "1.0",
             bundleVersion: "1",
@@ -31,8 +31,8 @@ let package = Package(
                 .landscapeLeft
             ],
             capabilities: [
-                .microphone(purposeString: "We ask to use the microphone to improve user experience and allowing the selection of your preference."),
-                .speechRecognition(purposeString: "We ask to recognize your speech to understand the selection of your preference.")
+                .microphone(purposeString: "The microphone improves user experience and effectiveness of the app, allowing the selection of your preference."),
+                .speechRecognition(purposeString: "We ask to recognize your speech to recognize the selection of your preference.")
             ],
             appCategory: .utilities
         )

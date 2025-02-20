@@ -1,5 +1,5 @@
 //
-//  NavigationValue.swift
+//  Navigation.swift
 //  PlaygroundApp
 //
 //  Created by Davide Castaldi on 06/02/25.
@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum NavigationValue {
-    case createPassword
+    case createPassword, reload
 }
 
 class Navigation: ObservableObject {

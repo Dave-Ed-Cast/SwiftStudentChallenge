@@ -12,7 +12,7 @@ struct MyApp: App {
     
     @StateObject private var navigation = Navigation.shared
     @StateObject private var onboarding: Onboarding = .init()
-    
+
     var body: some Scene {
         WindowGroup {
             if onboarding.completed {

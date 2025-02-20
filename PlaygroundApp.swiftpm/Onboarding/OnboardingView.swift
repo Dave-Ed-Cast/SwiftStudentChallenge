@@ -31,18 +31,18 @@ struct OnboardingView: View {
                 TabView {
                     OnboardingViewModel(
                         onboardingComplete: $onboarding.completed,
-                        title: "Meet Your Digital Key",
-                        bodyText: "Imagine your password as a key to a secret vault. The stronger it is, the safer your treasures (data) stay. A great key isn’t just long, it’s unique! Mobile, external or traditional keyboard? Your password will be easy to remember and still safe."
+                        title: "Meet your digital key",
+                        bodyText: "Imagine your password as a key to a secret vault. The stronger, the safer your treasures remain. A great key is unique! With KeyShape, your password will be easy to remember and safe."
                     )
                     OnboardingViewModel(
                         onboardingComplete: $onboarding.completed,
-                        title: "What If Your Key Gets Stuck?",
-                        bodyText: "Face ID and Touch ID are like magic doors—fast and seamless. But what if they don’t open? A strong password is your backup key, always ready. To make things even smoother, we’ll guide you through a voice-assisted setup."
+                        title: "What if your key gets stuck?",
+                        bodyText: "Face ID/Touch ID are magic doors, fast and seamless. However, they might failt and you need to use your key. With KeyShape you won't need To make remember with much effort your key."
                     )
                     OnboardingViewModel(
                         onboardingComplete: $onboarding.completed,
-                        title: "Tailor Your Key for Every Door",
-                        bodyText: "Just like a master key works everywhere, a well designed password adapts to any keyboard. Let’s build one that blends letters, numbers, and symbols effortlessly. Ready to secure your digital world? Let’s do it!",
+                        title: "Tailor your key for every door",
+                        bodyText: "A master key opens every door, so does a well designed password to any keyboard. Let’s build one that blends letters, numbers, and symbols effortlessly. Ready to secure your digital world? Let’s do it!",
                         showDoneButton: true
                     )
                 }

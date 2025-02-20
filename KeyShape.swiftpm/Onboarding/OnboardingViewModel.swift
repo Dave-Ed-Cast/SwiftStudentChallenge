@@ -31,16 +31,24 @@ struct OnboardingViewModel: View {
                 .if(showDoneButton) {
                     $0.overlay(alignment: .bottom) {
                         Button {
-                            onboardingComplete = true
+                            withAnimation(.easeIn(duration: 0.5)) {
+                                onboardingComplete = true
+                            }
                         } label: {
-                            Text("Start!")
-                                .font(.title3)
-                                .frame(
-                                    width: portrait ? deviceWidth * 0.15 : deviceWidth * 0.2,
-                                    height: portrait ? deviceHeight * 0.05 : deviceHeight * 0.075
-                                )
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 20)
+                                    .foregroundStyle(.blue)
+                                Text("Start!")
+                                    .font(.title3)
+                                    .foregroundStyle(.white)
+                                    
+                            }
+                            .frame(
+                                width: portrait ? deviceWidth * 0.15 : deviceWidth * 0.2,
+                                height: portrait ? deviceHeight * 0.045 : deviceHeight * 0.075
+                            )
                         }
-                        .buttonStyle(.bordered)
+                        
                         .offset(y: portrait ? deviceHeight * 0.08 : deviceHeight * 0.15)
                     }
                 }

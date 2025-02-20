@@ -19,14 +19,19 @@ struct MethodListView: View {
                     HStack(spacing: 20) {
                         Text(shape.side)
                             .font(.headline)
-                            .frame(width: deviceWidth * 0.04)
+                            .frame(width: deviceWidth * 0.06)
                         ShapeView(type: shape.shapeType, strokeColor: .blue)
-                            .frame(width: deviceWidth * 0.04, height: deviceWidth * 0.04)
+                            .frame(width: deviceWidth * 0.0425, height: deviceWidth * 0.0425)
                         
                         Text(shape.name)
                             .font(.caption)
+                            .fontWeight(.medium)
                             .foregroundColor(.gray)
+                            .padding(.leading, 20)
                         
+                        Spacer()
+                        Image(systemName: "ellipsis")
+                            .foregroundStyle(.gray.opacity(0.5))
                     }
                     
                     .swipeActions {

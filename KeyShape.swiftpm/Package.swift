@@ -30,10 +30,6 @@ let package = Package(
                 .landscapeRight,
                 .landscapeLeft
             ],
-            capabilities: [
-                .microphone(purposeString: "The microphone improves user experience and effectiveness of the app, allowing the selection of your preference."),
-                .speechRecognition(purposeString: "We ask to recognize your speech to recognize the selection of your preference.")
-            ],
             appCategory: .utilities
         )
     ],

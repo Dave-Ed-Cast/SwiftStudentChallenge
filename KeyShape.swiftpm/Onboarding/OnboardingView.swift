@@ -10,6 +10,8 @@ import SwiftUI
 struct OnboardingView: View {
     
     @ObservedObject var onboarding: Onboarding
+    
+    @State private var offsetY: CGFloat = 0
     @State private var welcomeShouldGoUp = false
     
     let size = UIScreen.main.bounds.size
@@ -19,8 +21,10 @@ struct OnboardingView: View {
         VStack {
             Spacer()
             AnimatedWelcome(namespace: namespace)
+                .offset(y: offsetY)
                 .onAppear {
-                    withAnimation(.easeInOut(duration: 1.25).delay(1)) {
+                    
+                    withAnimation(.bouncy(duration: 1).delay(1.5)) {
                         welcomeShouldGoUp = true
                     }
                 }

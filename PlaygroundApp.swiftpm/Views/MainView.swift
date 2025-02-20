@@ -8,18 +8,18 @@
 import SwiftUI
 
 struct MainView: View {
-        
-    @EnvironmentObject private var view: Navigation
     
-    @StateObject private var methodHolder: MethodHolder = .init()
+    @EnvironmentObject private var view: Navigation
+    @EnvironmentObject private var audioManager: AudioManager
+    @EnvironmentObject private var methodHolder: MethodHolder
     
     @State private var currentStep: Int = 0
     @State private var phase: CGFloat = 0
     @State private var hand: String = "none"
     @State private var shape: ShapeView.ShapeType = .unknown
     @State private var text = ""
-
-  
+    
+    
     let audioRequired: Bool
     let lastStep = Steps.stepsArray.count
     
@@ -48,10 +48,15 @@ struct MainView: View {
                 switch currentStep {
                 case 0:
                     Step1(chosenShape: $shape)
+                        .environmentObject(audioManager)
                 case 1:
                     Step2(hand: $hand)
+                        .environmentObject(audioManager)
                 case 2:
                     Step3(shape: $shape)
+                    if !audioRequired {
+                        Spacer()
+                    }
                 case 3:
                     Step4(shape: $shape, hand: $hand)
                     TextField("Create your password here...", text: $text)
@@ -72,6 +77,7 @@ struct MainView: View {
                     EmptyView()
                 }
             }
+            
             .multilineTextAlignment(.center)
             
             if currentStep < lastStep - 4 && audioRequired {
@@ -81,38 +87,36 @@ struct MainView: View {
                 Spacer()
             }
             
-           
-                Button {
-                    if currentStep < Steps.stepsArray.count - 1 {
-                        withAnimation {
-                            currentStep += 1
-                        }
-                    } else {
-                        withAnimation {
-                            view.value = .list
-                        }
-                    }
-                } label: {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 20)
-                            .foregroundStyle(.blue)
-                        Text(isButtonDisabled ? "Choose..." : "Next!")
-                            .accessibilityHint(isButtonDisabled ? "Interact with the interface first before pressing this button" : "")
-                            .foregroundStyle(.white)
-                            .font(.title2)
-                    }
-                    .frame(width: deviceWidth * 0.2, height: deviceHeight * 0.075)
-                }
-               
-                .onChange(of: currentStep) { newValue in
-                    print(currentStep)
-                }
-                .disabled(isButtonDisabled)
-                .opacity(isButtonDisabled ? 0.5 : 1)
             
-        }
-        .onDisappear {
-            methodHolder.addShape(name: hand, shapeType: shape)
+            Button {
+                if currentStep < Steps.stepsArray.count - 1 {
+                    withAnimation {
+                        currentStep += 1
+                    }
+                } else {
+                    withAnimation {
+                        view.value = .list
+                        methodHolder.addShape(side: hand, shapeType: shape)
+                    }
+                }
+            } label: {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 20)
+                        .foregroundStyle(.blue)
+                    Text(isButtonDisabled ? "Choose..." : "Next!")
+                        .accessibilityHint(isButtonDisabled ? "Interact with the interface first before pressing this button" : "")
+                        .foregroundStyle(.white)
+                        .font(.title2)
+                }
+                .frame(width: deviceWidth * 0.2, height: deviceHeight * 0.075)
+            }
+            
+            .onChange(of: currentStep) { newValue in
+                print(currentStep)
+            }
+            .disabled(isButtonDisabled)
+            .opacity(isButtonDisabled ? 0.5 : 1)
+            
         }
         .padding()
     }

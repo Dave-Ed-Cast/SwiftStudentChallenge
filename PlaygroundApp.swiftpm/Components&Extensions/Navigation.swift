@@ -13,6 +13,7 @@ enum NavigationValue {
 
 class Navigation: ObservableObject {
     static var shared = Navigation()
+    
     @Published public var value: NavigationValue = .createPassword
     private init() {}
 }

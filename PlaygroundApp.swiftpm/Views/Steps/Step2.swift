@@ -9,6 +9,7 @@ import SwiftUI
 
 struct Step2: View {
     
+    @EnvironmentObject private var audioManager: AudioManager
     @Environment(\.colorScheme) private var colorScheme
     
     @Binding var hand: String

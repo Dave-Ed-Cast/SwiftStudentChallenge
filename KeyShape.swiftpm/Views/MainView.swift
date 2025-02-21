@@ -97,7 +97,7 @@ struct MainView: View {
                         .foregroundStyle(.white)
                         .font(.title2)
                 }
-                .frame(width: deviceWidth * 0.2, height: deviceHeight * 0.075)
+                .frame(width: buttonWidth, height: buttonHeight)
             }
             
             .onChange(of: currentStep) { newValue in

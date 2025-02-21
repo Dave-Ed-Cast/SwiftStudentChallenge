@@ -16,6 +16,7 @@ struct Step3: View {
     
     var body: some View {
         VStack {
+            let shapeSize = deviceOrientation.isPortrait ? deviceWidth * 0.158 : deviceWidth * 0.13
             Spacer()
             Text("A possible password using this method: \(possiblePasswords.currentPassword)")
                 .onAppear {
@@ -32,8 +33,11 @@ struct Step3: View {
                     shapeIndex: 0,
                     cycle: true
                 )
-                .frame(width: 160, height: 150)
-                .offset(y: -deviceHeight * 0.025)
+                .frame(width: shapeSize + 10, height: shapeSize)
+                .offset(
+                    x: shape == .square ? -deviceWidth * 0.005 : 0,
+                    y: shape == .square ? -deviceHeight * 0.015 : -deviceHeight * 0.0175
+                )
             }
             .accessibilityLabel("")
             .accessibilityHint("Imagine the \(shape) you selected being typed on this keyboard for the next step.")

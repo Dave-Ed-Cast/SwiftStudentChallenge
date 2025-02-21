@@ -39,7 +39,10 @@ struct Step1: View {
                             chosenShape = shape
                             recognizedText = String("\(shape)")
                         }
-                        .frame(width: deviceWidth * 0.11, height: deviceWidth * 0.11)
+                        .frame(
+                            width: deviceOrientation.isPortrait ? deviceWidth * 0.15 : deviceWidth * 0.11,
+                            height: deviceOrientation.isPortrait ? deviceWidth * 0.15 : deviceWidth * 0.11
+                        )
                 }
             }
             Spacer()

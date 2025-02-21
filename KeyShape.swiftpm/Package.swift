@@ -16,7 +16,7 @@ let package = Package(
         .iOSApplication(
             name: "KeyShape",
             targets: ["AppModule"],
-            bundleIdentifier: "com.Dave.test5",
+            bundleIdentifier: "com.Dave.test",
             teamIdentifier: "WLW428B75Y",
             displayVersion: "1.0",
             bundleVersion: "1",
@@ -27,8 +27,10 @@ let package = Package(
                 .phone
             ],
             supportedInterfaceOrientations: [
+                .portrait,
                 .landscapeRight,
-                .landscapeLeft
+                .landscapeLeft,
+                .portraitUpsideDown(.when(deviceFamilies: [.pad]))
             ],
             appCategory: .utilities
         )

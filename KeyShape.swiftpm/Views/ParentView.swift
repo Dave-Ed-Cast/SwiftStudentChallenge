@@ -33,10 +33,8 @@ struct ParentView: View {
         .onAppear {
             methodHolder.loadFromJSON()
                 if methodHolder.shapes.isEmpty {
-                    print("had to go to creation!")
                     navigation.value = .createPassword
                 } else {
-                    print("went to list!")
                     navigation.value = .list
                 }
             

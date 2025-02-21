@@ -27,4 +27,12 @@ extension View {
     var deviceOrientation: UIDeviceOrientation {
         UIDevice.current.orientation
     }
+    
+    var buttonWidth: CGFloat {
+        deviceOrientation.isPortrait ? deviceWidth * 0.275 : deviceWidth * 0.2
+    }
+    
+    var buttonHeight: CGFloat {
+        deviceOrientation.isPortrait ? deviceHeight * 0.05 : deviceHeight * 0.075
+    }
 }

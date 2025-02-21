@@ -61,7 +61,6 @@ struct OnboardingView: View {
                 onboarding.saveCompletionValue()
             }
         }
-        .frame(width: deviceWidth * 0.9)
     }
 }
 

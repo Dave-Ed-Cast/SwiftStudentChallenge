@@ -14,9 +14,10 @@ struct Step2: View {
     @Binding var hand: String
     
     var body: some View {
-        VStack {
+        VStack(spacing: 10) {
             Spacer()
             Text(hand != "none" ? "You picked: \(hand)" : "Pick one of the hands")
+                .font(.headline)
                 .accessibilityHint("Choose between left or right hand by tapping or speaking the name.")
 
             HStack(spacing: 15) {
@@ -31,7 +32,6 @@ struct Step2: View {
                     }
                     .border(hand == "left" ? Color.blue : Color.clear, width: 5)
                 
-                    .frame(width: deviceWidth * 0.15, height: deviceHeight * 0.2)
                 Image("right").resizable()
                     .accessibilityLabel("Right hand, double tap to select, then reach the bottom button.")
                     .accessibilityAddTraits(.isButton)
@@ -42,8 +42,12 @@ struct Step2: View {
                         hand = "right"
                     }
                     .border(hand == "right" ? Color.blue : Color.clear, width: 5)
-                    .frame(width: deviceWidth * 0.15, height: deviceHeight * 0.2)
             }
+            
+            .frame(
+                width: deviceOrientation.isPortrait ? deviceWidth * 0.4 : deviceWidth * 0.3,
+                height: deviceOrientation.isPortrait ? deviceWidth * 0.2 : deviceWidth * 0.15
+            )
             .if(colorScheme == .dark) {
                 $0.colorInvert()
             }

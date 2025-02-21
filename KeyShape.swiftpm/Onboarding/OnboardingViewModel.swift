@@ -19,7 +19,6 @@ struct OnboardingViewModel: View {
     var body: some View {
         VStack(spacing: 25) {
             
-            let portrait = deviceOrientation.isPortrait
             Text(title)
                 .font(.title)
                 .fontWeight(.bold)
@@ -43,13 +42,10 @@ struct OnboardingViewModel: View {
                                     .foregroundStyle(.white)
                                     
                             }
-                            .frame(
-                                width: portrait ? deviceWidth * 0.15 : deviceWidth * 0.2,
-                                height: portrait ? deviceHeight * 0.045 : deviceHeight * 0.075
-                            )
+                            .frame(width: buttonWidth, height: buttonHeight)
                         }
                         
-                        .offset(y: portrait ? deviceHeight * 0.08 : deviceHeight * 0.15)
+                        .offset(y: deviceOrientation.isPortrait ? deviceHeight * 0.08 : deviceHeight * 0.15)
                     }
                 }
         }

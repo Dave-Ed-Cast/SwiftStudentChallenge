@@ -30,6 +30,9 @@ struct Step2: View {
                     .onTapGesture {
                         hand = "left"
                     }
+                    .if(colorScheme == .dark) {
+                        $0.colorInvert()
+                    }
                     .border(hand == "left" ? Color.blue : Color.clear, width: 5)
                 
                 Image("right").resizable()
@@ -41,6 +44,9 @@ struct Step2: View {
                     .onTapGesture {
                         hand = "right"
                     }
+                    .if(colorScheme == .dark) {
+                        $0.colorInvert()
+                    }
                     .border(hand == "right" ? Color.blue : Color.clear, width: 5)
             }
             
@@ -48,9 +54,6 @@ struct Step2: View {
                 width: deviceOrientation.isPortrait ? deviceWidth * 0.4 : deviceWidth * 0.3,
                 height: deviceOrientation.isPortrait ? deviceWidth * 0.2 : deviceWidth * 0.15
             )
-            .if(colorScheme == .dark) {
-                $0.colorInvert()
-            }
             Spacer()
         }
         .padding()

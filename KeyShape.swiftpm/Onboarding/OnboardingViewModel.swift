@@ -44,7 +44,7 @@ struct OnboardingViewModel: View {
                             }
                             .frame(width: buttonWidth, height: buttonHeight)
                         }
-                        
+                        .transition(.push(from: .trailing))
                         .offset(y: deviceOrientation.isPortrait ? deviceHeight * 0.08 : deviceHeight * 0.15)
                     }
                 }

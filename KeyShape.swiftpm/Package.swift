@@ -16,7 +16,7 @@ let package = Package(
         .iOSApplication(
             name: "KeyShape",
             targets: ["AppModule"],
-            bundleIdentifier: "com.Dave.test",
+            bundleIdentifier: "com.Dave.test5",
             teamIdentifier: "WLW428B75Y",
             displayVersion: "1.0",
             bundleVersion: "1",
@@ -38,7 +38,10 @@ let package = Package(
     targets: [
         .executableTarget(
             name: "AppModule",
-            path: "."
+            path: ".",
+            resources: [
+                .process("Resources")
+            ]
         )
     ],
     swiftLanguageVersions: [.v5]

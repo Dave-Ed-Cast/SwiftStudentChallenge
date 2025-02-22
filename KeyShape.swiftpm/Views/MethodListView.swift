@@ -29,9 +29,6 @@ struct MethodListView: View {
                             .foregroundColor(.gray)
                             .padding(.leading, 20)
                         
-                        Spacer()
-                        Image(systemName: "ellipsis")
-                            .foregroundStyle(.gray.opacity(0.5))
                     }
                     
                     .swipeActions {
@@ -58,7 +55,6 @@ struct MethodListView: View {
                 methodHolder.loadFromJSON()
             }
             .navigationTitle("Your combinations")
-            
         }
         .overlay(alignment: .topTrailing) {
             Button {
@@ -71,8 +67,6 @@ struct MethodListView: View {
                     .foregroundStyle(.blue)
             }
         }
-        
-        
     }
     
     private func renameShape(_ shape: ShapeEntry) {

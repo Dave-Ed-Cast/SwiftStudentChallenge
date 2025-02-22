@@ -12,8 +12,9 @@ struct Steps {
         "Step 1: Find your perfect key shape",
         "Step 2: Choose your strongest hand",
         "Step 3: Set your keyboard style",
-        "Step 4: Unleash your creativity",
-        "Step 5: Freedom (from technology)"
+        "Step 4: Observe the possibilities",
+        "Step 5: Unleash your creativity",
+        "Step 6: Freedom (from technology)",
     ]
     
     static let descriptionArray = [
@@ -24,8 +25,11 @@ struct Steps {
         //Step 3
         "Whether it’s QWERTY, AZERTY, or Dvorak, your layout is part of your secret formula!",
         //Step 4
-        "Time to test it to your heart content!",
+        "Follow this video to see how it could work!",
         //Step 5
-        "You’ve mastered the technique!"
+        "To proceed, create a password that containst at least 8 characters, one uppercase, one special and one number",
+        //Step 6
+        "You’ve mastered the technique!",
+        "forse"
     ]
 }

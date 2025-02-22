@@ -18,16 +18,17 @@ struct ParentView: View {
     var body: some View {
         ZStack {
             switch navigation.value {
-                
             case .list:
                 MethodListView()
                     .environmentObject(navigation)
                     .environmentObject(methodHolder)
-                
+                    .transition(.move(edge: .trailing))
+            
             case .createPassword:
                 MainView()
                     .environmentObject(navigation)
                     .environmentObject(methodHolder)
+                    .transition(.move(edge: .leading))
             }
         }
         .onAppear {

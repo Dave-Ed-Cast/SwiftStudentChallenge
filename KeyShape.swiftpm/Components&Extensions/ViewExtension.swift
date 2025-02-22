@@ -33,6 +33,6 @@ extension View {
     }
     
     var buttonHeight: CGFloat {
-        deviceOrientation.isPortrait ? deviceHeight * 0.05 : deviceHeight * 0.075
+        deviceOrientation.isPortrait ? deviceHeight * 0.045 : deviceHeight * 0.075
     }
 }

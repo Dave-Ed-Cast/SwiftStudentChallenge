@@ -2,35 +2,66 @@
 //  Step4.swift
 //  PlaygroundApp
 //
-//  Created by Davide Castaldi on 14/02/25.
+//  Created by Davide Castaldi on 21/02/25.
 //
 
 import SwiftUI
+import AVKit
 
 struct Step4: View {
-    
-    @Environment(\.colorScheme) private var colorScheme
-    
-    @Binding var shape: ShapeView.ShapeType
-    @Binding var hand: String
+    @Environment(\.colorScheme) var colorScheme
+    @State private var animationCompleted = false
+    @State private var player: AVQueuePlayer?
+    @State private var looper: AVPlayerLooper?
     
     var body: some View {
-        VStack(alignment: .center, spacing: 10) {
-            Text("With your selection, you could apply it here")
-                .font(.headline)
-                .accessibilityHint("Interact with the image below")
-            
-                MethodComponentView(hand: hand, shape: shape)            
-            VStack {
-                Text("KeyShape will only be saving your **method** for you!")
-                Text("Hint: hold keyboard's letters and drag downwards for numbers or special character!")
+        VStack {
+            Spacer()
+            HStack {
+                Text("There are infinite possibilities such as: ")
+                TypewriterText(
+                    fullText: "W#-cv&4e",
+                    animationCompleted: $animationCompleted
+                )
             }
+            .font(.title)
+            .padding()
+            
+            TransparentVideoPlayer(videoName: colorScheme == .dark ? "VideoDark" : "VideoLight")
+                .scaledToFill()
+                .frame(width: deviceWidth * 0.975, height: deviceOrientation.isPortrait ? deviceHeight * 0.3 : deviceHeight * 0.45)
+                .allowsHitTesting(false)
+                .accessibilityHint("Imagine a square drawn on a keyboard, however you wish it. If you use your hand and press each button in sequence, you will get a password.")
+            
+            Spacer()
         }
-        .frame(height: deviceHeight * 0.15)
-        .padding()
+        
+        .onAppear {
+            setupPlayer()
+        }
+        
+        
+    }
+    private func setupPlayer() {
+        let videoName = colorScheme == .dark ? "VideoDark" : "VideoLight"
+        
+        guard let url = Bundle.main.url(forResource: videoName, withExtension: "mov") else { return }
+        
+        let asset = AVAsset(url: url)
+        let playerItem = AVPlayerItem(asset: asset)
+        let queuePlayer = AVQueuePlayer(playerItem: playerItem)
+        
+        let looper = AVPlayerLooper(player: queuePlayer, templateItem: playerItem)
+        
+        queuePlayer.isMuted = true
+        queuePlayer.play()
+        
+        self.player = queuePlayer
+        self.looper = looper
+        
     }
 }
 
 #Preview {
-    Step4(shape: .constant(.circle), hand: .constant("left"))
+    Step4()
 }

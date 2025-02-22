@@ -1,5 +1,5 @@
 //
-//  Step5.swift
+//  Step4.swift
 //  PlaygroundApp
 //
 //  Created by Davide Castaldi on 14/02/25.
@@ -9,20 +9,26 @@ import SwiftUI
 
 struct Step5: View {
     
-    let method = Text("method").fontWeight(.bold)
-    let password = Text("password").fontWeight(.bold)
+    @Environment(\.colorScheme) private var colorScheme
+    
+    @Binding var shape: ShapeView.ShapeType
+    @Binding var hand: String
+    
     var body: some View {
-        VStack {
-            Text("You're all set!")
-                .font(.largeTitle)
-            Text("Thank you for using KeyShape! Your generated \(method) is ready for you right after this step. Rest assured, your password is never stored. Only the method you selected is saved. This is so you can open the app and always find it! Feel free to associate your \(password) with a label!")
-                .font(.title3)
+        VStack(alignment: .center, spacing: 10) {
+            Text("With your selection, you could apply it here")
+                .accessibilityHint("Interact with the image below")
+            
+            MethodComponentView(hand: hand, shape: shape)
+            
+            Text("Hold letters and drag downwards for numbers or special characters!")
+                .font(.headline)
         }
-        .multilineTextAlignment(.center)
+        .frame(height: deviceHeight * 0.2)
         .padding()
     }
 }
 
 #Preview {
-    Step5()
+    Step5(shape: .constant(.circle), hand: .constant("left"))
 }

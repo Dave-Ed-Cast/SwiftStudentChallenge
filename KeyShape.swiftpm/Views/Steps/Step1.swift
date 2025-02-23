@@ -26,26 +26,34 @@ struct Step1: View {
             
             HStack(spacing: 0) {
                 ForEach(shapeTypes, id: \.self) { shape in
-                    ShapeView(type: shape, strokeColor: shape == chosenShape ? .blue : .primary)
-                    
-                        .onTapGesture {
-                            chosenShape = shape
-                            recognizedText = String("\(shape)")
-                        }
-                        .padding()
-                        .accessibilityAddTraits(.isButton)
-                        .accessibilityLabel(labelForShape(shape))
-                        .accessibilityAction {
-                            chosenShape = shape
-                            recognizedText = String("\(shape)")
-                        }
-                        .frame(
-                            width: deviceOrientation.isPortrait ? deviceWidth * 0.15 : deviceWidth * 0.11,
-                            height: deviceOrientation.isPortrait ? deviceWidth * 0.15 : deviceWidth * 0.11
-                        )
+                    Button {
+                        chosenShape = shape
+                        recognizedText = String("\(shape)")
+                    } label: {
+                        ShapeView(type: shape, strokeColor: shape == chosenShape ? .blue : .primary)
+                            .padding()
+                            .accessibilityAddTraits(.isButton)
+                            .accessibilityLabel(labelForShape(shape))
+                            .accessibilityAction {
+                                chosenShape = shape
+                                recognizedText = String("\(shape)")
+                            }
+                            .frame(
+                                width: deviceOrientation.isPortrait ? deviceWidth * 0.15 : deviceWidth * 0.11,
+                                height: deviceOrientation.isPortrait ? deviceWidth * 0.15 : deviceWidth * 0.11
+                            )
+                    }
                 }
             }
             Spacer()
+        }
+        .if(chosenShape == .triangle) {
+            $0.overlay(alignment: .bottom) {
+                Text("Choosing triangle means pressing one of the keys three times when making the key shape.")
+                    .font(.caption)
+                    .fontWeight(.semibold)
+                    .frame(width: deviceWidth)
+            }
         }
         .padding()
     }

@@ -22,6 +22,7 @@ struct TransparentVideoPlayer: UIViewControllerRepresentable {
         
         controller.player = player
         controller.view.backgroundColor = .clear
+        controller.view.sizeThatFits(.init(width: deviceWidth * 0.9, height: deviceHeight * 0.3))
         controller.modalPresentationStyle = .overFullScreen
         
         player.isMuted = true

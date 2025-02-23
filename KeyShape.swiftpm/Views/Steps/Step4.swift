@@ -23,16 +23,28 @@ struct Step4: View {
                     fullText: "W#-cv&4e",
                     animationCompleted: $animationCompleted
                 )
+                .font(.title3)
             }
-            .font(.title)
             .padding()
             
             TransparentVideoPlayer(videoName: colorScheme == .dark ? "VideoDark" : "VideoLight")
                 .scaledToFill()
-                .frame(width: deviceWidth * 0.975, height: deviceOrientation.isPortrait ? deviceHeight * 0.3 : deviceHeight * 0.45)
+                .frame(width: deviceWidth * 0.9, height: deviceOrientation.isPortrait ? deviceHeight * 0.3 : deviceHeight * 0.45)
                 .allowsHitTesting(false)
                 .accessibilityHint("Imagine a square drawn on a keyboard, however you wish it. If you use your hand and press each button in sequence, you will get a password.")
             
+                .overlay {
+                    ShapeView(type: .square, strokeColor: .red)
+                        .frame(
+                            width: deviceWidth * 0.15,
+                            height: deviceWidth * 0.15
+                        )
+                        .offset(
+                            x: -deviceWidth * 0.148,
+                            y: deviceOrientation.isPortrait ? -deviceHeight * 0.02 : -deviceHeight * 0.05
+                        )
+                        .offset(y: deviceOrientation.isPortrait ? -deviceHeight * 0.0 : 0)
+                }
             Spacer()
         }
         

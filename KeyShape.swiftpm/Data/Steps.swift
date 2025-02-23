@@ -19,13 +19,13 @@ struct Steps {
     
     static let descriptionArray = [
         //Step 1
-        "Imagine your password as a shape, a unique symbol only you understand. Choose from these, picture it. When you are ready, select it and press next.",
+        "Imagine your password as a shape. It must be a shape you synergize with. Choose the one that suits you best and when you found it, select it and press next.",
         //Step 2
         "Everyone has a dominant hand! Pick yours. This will determine the interaction with your digital key.",
         //Step 3
         "Whether it’s QWERTY, AZERTY, or Dvorak, your layout is part of your secret formula!",
         //Step 4
-        "Follow this video to see how it could work!",
+        "A more practical example could be this",
         //Step 5
         "To proceed, create a password that containst at least 8 characters, one uppercase, one special and one number",
         //Step 6

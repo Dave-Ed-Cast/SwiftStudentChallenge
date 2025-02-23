@@ -35,18 +35,18 @@ struct OnboardingView: View {
                 TabView {
                     OnboardingViewModel(
                         onboardingComplete: $onboarding.completed,
-                        title: "Meet your digital key",
-                        bodyText: "Imagine your password as a key to a secret vault. The stronger, the safer your treasures remain. A great key is unique! With KeyShape, your password will be easy to remember and safe."
+                        title: "What is KeyShape?",
+                        bodyText: "A password is a key to a secret vault. The stronger it is, the safer your treasures remain. That's why it must be impossible to guess! With KeyShape, your password will be safe and easy to remember."
                     )
                     OnboardingViewModel(
                         onboardingComplete: $onboarding.completed,
-                        title: "What if your key gets stuck?",
-                        bodyText: "Face ID/Touch ID are magic doors, fast and seamless. However, they might failt and you need to use your key. With KeyShape you won't need To make remember with much effort your key."
+                        title: "Meet your internal key",
+                        bodyText: "Face ID/Touch ID are useful. However, they might fail or you might need to access an account that doesn't have the password saved. Wouldn't you like your key to be in the safest place ever? With KeyShape, your key will always be inside you."
                     )
                     OnboardingViewModel(
                         onboardingComplete: $onboarding.completed,
-                        title: "Tailor your key for every door",
-                        bodyText: "A master key opens every door, so does a well designed password to any keyboard. Let’s build one that blends letters, numbers, and symbols effortlessly. Ready to secure your digital world? Let’s do it!",
+                        title: "How do I build this?",
+                        bodyText: "KeyShape will use primitive and instintive techniques to build your key. It will be a fun and interactive process! Let’s build one that conforms to today's standards together, shall we?",
                         showDoneButton: true
                     )
                 }
@@ -58,7 +58,9 @@ struct OnboardingView: View {
         .padding()
         .onDisappear {
             if onboarding.completed {
-                onboarding.saveCompletionValue()
+                withAnimation {
+                    onboarding.saveCompletionValue()
+                }
             }
         }
     }

@@ -13,22 +13,23 @@ struct ParentView: View {
     
     @StateObject private var methodHolder: MethodHolder = .init()
     
-    @State private var audioNotRequired = true
-
     var body: some View {
         ZStack {
             switch navigation.value {
             case .list:
-                MethodListView()
-                    .environmentObject(navigation)
-                    .environmentObject(methodHolder)
-                    .transition(.move(edge: .trailing))
-            
+                NavigationStack {
+                    MethodListView()
+                        .transition(.move(edge: .trailing))
+                }
+                .environmentObject(navigation)
+                .environmentObject(methodHolder)
             case .createPassword:
-                MainView()
-                    .environmentObject(navigation)
-                    .environmentObject(methodHolder)
-                    .transition(.move(edge: .leading))
+                NavigationStack {
+                    MainView()
+                        .transition(.move(edge: .leading))
+                }
+                .environmentObject(navigation)
+                .environmentObject(methodHolder)
             }
         }
         .onAppear {

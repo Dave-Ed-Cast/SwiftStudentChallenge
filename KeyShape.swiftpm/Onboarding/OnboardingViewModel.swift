@@ -38,7 +38,7 @@ struct OnboardingViewModel: View {
                                 RoundedRectangle(cornerRadius: 20)
                                     .foregroundStyle(.blue)
                                 Text("Start!")
-                                    .font(.title3)
+                                    .font(.title2)
                                     .foregroundStyle(.white)
                                     
                             }

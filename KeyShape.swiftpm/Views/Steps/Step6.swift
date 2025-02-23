@@ -14,12 +14,11 @@ struct Step6: View {
     var body: some View {
         VStack {
             Spacer()
-            Text("You're all set!")
-                .font(.largeTitle)
-            Text("Your generated \(method) will be stored for you to remember. Only the \(method) is saved, not the passowrd. Feel free to associate your \(password) with a label!")
-                .font(.title3)
+            Text("KeyShape will hold your \(method) for you, but never the characters for the \(password).")
+            Text("You can create another one by mixing and matching shapes and hands!")
             Spacer()
         }
+        .font(.title3)
         .multilineTextAlignment(.center)
         .padding()
         Spacer()

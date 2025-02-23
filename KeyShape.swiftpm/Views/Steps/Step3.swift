@@ -16,7 +16,7 @@ struct Step3: View {
     
     var body: some View {
         VStack {
-            let shapeSize = deviceOrientation.isPortrait ? deviceWidth * 0.158 : deviceWidth * 0.13
+            let shapeSize = deviceOrientation.isPortrait ? deviceWidth * 0.14 : deviceWidth * 0.13
             Spacer()
             Text("A possible password using this method: \(possiblePasswords.currentPassword)")
                 .onAppear {
@@ -28,16 +28,11 @@ struct Step3: View {
                 Image("Native")
                     .resizable()
                     .scaledToFit()
-                ShapeTransitionView(
-                    spokenShape: $shape,
-                    shapeIndex: 0,
-                    cycle: true
-                )
-                .frame(width: shapeSize + 10, height: shapeSize)
-                .offset(
-                    x: shape == .square ? -deviceWidth * 0.005 : 0,
-                    y: shape == .square ? -deviceHeight * 0.015 : -deviceHeight * 0.0175
-                )
+                ShapeTransitionView(spokenShape: $shape)
+                    .frame(width: shapeSize, height: shapeSize)
+                    .offset(y: shape == .square ? -deviceHeight * 0.025 : -deviceHeight * 0.019
+                    )
+                    .offset(y: deviceOrientation.isPortrait ? deviceHeight * 0.006 : -deviceHeight * 0.006)
             }
             .accessibilityLabel("")
             .accessibilityHint("Imagine the \(shape) you selected being typed on this keyboard for the next step.")

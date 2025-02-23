@@ -18,13 +18,17 @@ struct ShapeView: View {
     var body: some View {
         switch type {
         case .circle:
-            Circle().strokeBorder(strokeColor, lineWidth: 5)
+            Circle().strokeBorder(strokeColor, lineWidth: deviceHeight * 0.004)
         case .triangle:
-            Triangle().strokeBorder(strokeColor, lineWidth: 5)
+            Triangle().strokeBorder(strokeColor, lineWidth: deviceHeight * 0.004)
         case .square:
-            Rectangle().strokeBorder(strokeColor, lineWidth: 5)
+            Rectangle().strokeBorder(strokeColor, lineWidth: deviceHeight * 0.004)
         default:
             EmptyView()
         }
     }
+}
+
+#Preview {
+    Step1(chosenShape: .constant(.square))
 }

@@ -17,7 +17,7 @@ struct MainView: View {
     @State private var hand: String = "none"
     @State private var shape: ShapeView.ShapeType = .unknown
     @State private var text = ""
-    @State private var shouldPushLeading = false
+    @State private var goNext = false
     
     private let lastStep = Steps.stepsArray.count
     
@@ -35,101 +35,85 @@ struct MainView: View {
     }
     
     var body: some View {
-        ZStack {
-            VStack {
-                VStack(spacing: 10) {
-                    StepNamesView(currentStep: currentStep)
-                        .frame(height: deviceHeight * 0.07)
-                    
-                    
-                    if currentStep >= lastStep - 3 {
-                        Spacer()
-                    }
-                    switch currentStep {
-                    case 0:
-                        Step1(chosenShape: $shape)
-                    case 1:
-                        Step2(hand: $hand)
-                    case 2:
-                        Step3(shape: $shape)
-                    case 3:
-                        Step4()
-                    case 4:
-                        Step5(shape: $shape, hand: $hand)
-                        TextField("Create your password here...", text: $text)
-                            .padding()
-                            .frame(width: deviceWidth * 0.35, height: deviceHeight * 0.05)
-                            .background(RoundedRectangle(cornerRadius: 20).fill(Color.gray.opacity(0.2)))
-                            .contentShape(Rectangle()) // Ensures whole area is tappable
-                            .onChange(of: text) { newValue in
-                                if newValue.count > 30 {
-                                    text = String(newValue.prefix(30))
-                                }
+        VStack {
+            VStack(spacing: 10) {
+                StepNamesView(currentStep: currentStep)
+                    .frame(height: deviceHeight * 0.07)
+                
+                
+                if currentStep >= lastStep - 3 {
+                    Spacer()
+                }
+                switch currentStep {
+                case 0:
+                    Step1(chosenShape: $shape)
+                case 1:
+                    Step2(hand: $hand)
+                case 2:
+                    Step3(shape: $shape)
+                case 3:
+                    Step4()
+                case 4:
+                    Step5(shape: $shape, hand: $hand)
+                    TextField("Create your password here...", text: $text)
+                        .contentShape(Rectangle())
+                        .padding()
+                        .frame(width: deviceWidth * 0.35, height: deviceHeight * 0.05)
+                        .background(RoundedRectangle(cornerRadius: 20).fill(Color.gray.opacity(0.2)))
+                        .onChange(of: text) { newValue in
+                            if newValue.count > 30 {
+                                text = String(newValue.prefix(30))
                             }
-                            .padding(.horizontal)
-                        Spacer()
-                    case 5:
-                        Step6()
-                        Spacer()
-                    default:
-                        EmptyView()
-                    }
-                }
-                
-                .multilineTextAlignment(.center)
-                
-                Spacer()
-                
-                
-                Button {
-                    if currentStep < Steps.stepsArray.count - 1 {
-                        withAnimation {
-                            currentStep += 1
                         }
-                    } else {
-                        shouldPushLeading = true
-                        withAnimation {
-                            view.value = .list
-                            methodHolder.addShape(side: hand, shapeType: shape)
-                        }
-                    }
-                } label: {
-                    ZStack {
-                        RoundedRectangle(cornerRadius: 20)
-                            .foregroundStyle(.blue)
-                        Text(isButtonDisabled ? "Choose..." : "Next!")
-                            .accessibilityHint(isButtonDisabled ? "Interact with the interface first before pressing this button" : "")
-                            .foregroundStyle(.white)
-                            .font(.title2)
-                    }
-                    .frame(width: buttonWidth, height: buttonHeight)
+                        .padding(.horizontal)
+                    Spacer()
+                    
+                case 5:
+                    Step6()
+                    Spacer()
+                default:
+                    EmptyView()
                 }
-                
-                .onChange(of: currentStep) { newValue in
-                    print(currentStep)
-                }
-                .disabled(isButtonDisabled)
-                .opacity(isButtonDisabled ? 0.5 : 1)
-                
             }
             
-            if !methodHolder.shapes.isEmpty {
-                Button {
+            .multilineTextAlignment(.center)
+            
+            Spacer()
+            
+            
+            Button {
+                if currentStep < Steps.stepsArray.count - 1 {
                     withAnimation {
-                        view.value = .list
+                        currentStep += 1
                     }
-                } label: {
-                    HStack {
-                        Image(systemName: "chevron.left")
-                        Text("Your combinations")
+                } else {
+                    withAnimation {
+                        goNext = true
+                        methodHolder.addShape(side: hand, shapeType: shape)
                     }
-                    .font(.headline)
-                    .fontWeight(.regular)
-                    
                 }
-                .padding()
-                .position(x: deviceWidth * 0.09, y: deviceHeight * 0.03)
+            } label: {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 20)
+                        .foregroundStyle(.blue)
+                    Text(isButtonDisabled ? "Choose..." : "Next!")
+                        .accessibilityHint(isButtonDisabled ? "Interact with the interface first before pressing this button" : "")
+                        .foregroundStyle(.white)
+                        .font(.title2)
+                }
+                .frame(width: buttonWidth, height: buttonHeight)
             }
+            .navigationDestination(isPresented: $goNext) {
+                MethodListView().navigationBarBackButtonHidden(true)
+            }
+            
+            
+            .onChange(of: currentStep) { newValue in
+                print(currentStep)
+            }
+            .disabled(isButtonDisabled)
+            .opacity(isButtonDisabled ? 0.5 : 1)
+            
         }
     }
     

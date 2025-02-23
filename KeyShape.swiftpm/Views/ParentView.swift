@@ -39,7 +39,6 @@ struct ParentView: View {
                 } else {
                     navigation.value = .list
                 }
-            
         }
     }
 }

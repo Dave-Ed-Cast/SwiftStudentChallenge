@@ -41,7 +41,7 @@ struct MethodComponentView: View {
                         .if(shape == .circle) { circle in
                             if deviceOrientation.isPortrait {
                                 circle.offset(
-                                    x: hand == "right" ? deviceWidth * 0.038 : -deviceWidth * 0.043
+                                    x: hand == "right" ? deviceWidth * 0.135 : -deviceWidth * 0.149
                                 )
                             } else {
                                 circle.offset(
@@ -53,7 +53,7 @@ struct MethodComponentView: View {
                         .if(shape == .triangle) { triangle in
                             if deviceOrientation.isPortrait {
                                 triangle.offset(
-                                    x: hand == "right" ? deviceWidth * 0.03 : -deviceWidth * 0.02
+                                    x: hand == "right" ? deviceWidth * 0.115 : -deviceWidth * 0.125
                                 )
                             } else {
                                 triangle.offset(
@@ -65,7 +65,7 @@ struct MethodComponentView: View {
                         .if(shape == .square) { square in
                             if deviceOrientation.isPortrait {
                                 square.offset(
-                                    x: 0
+                                    x: hand == "right" ? deviceWidth * 0.135 : -deviceWidth * 0.11
                                 )
                             } else {
                                 square.offset(

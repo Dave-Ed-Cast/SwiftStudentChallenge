@@ -24,7 +24,7 @@ struct OnboardingView: View {
                 .offset(y: offsetY)
                 .onAppear {
                     
-                    withAnimation(.bouncy(duration: 1).delay(1.5)) {
+                    withAnimation(.bouncy(duration: 1).delay(3.25)) {
                         welcomeShouldGoUp = true
                     }
                 }

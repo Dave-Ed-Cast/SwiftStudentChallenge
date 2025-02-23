@@ -12,9 +12,13 @@ struct AnimatedWelcome: View {
     var namespace: Namespace.ID
     
     var body: some View {
-        Text("Welcome to KeyShape.")
-            .font(.largeTitle)
-            .fontWeight(.bold)
-            .matchedGeometryEffect(id: "Title", in: namespace)
+        VStack(spacing: 5) {
+            Text("Welcome to KeyShape")
+                .font(.largeTitle)
+                .fontWeight(.bold)
+                .matchedGeometryEffect(id: "Title", in: namespace)
+            Text("Adaptive to the device. Best in landscape mode.")
+                .font(.callout)
+        }
     }
 }

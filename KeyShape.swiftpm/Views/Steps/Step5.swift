@@ -21,8 +21,8 @@ struct Step5: View {
             
             MethodComponentView(hand: hand, shape: shape)
             
-            Text("Hold letters and drag downwards for numbers or special characters!")
-                .font(.headline)
+//            Text("Hold letters and drag downwards for numbers or special characters!")
+//                .font(.headline)
         }
         .frame(height: deviceHeight * 0.2)
         .padding()

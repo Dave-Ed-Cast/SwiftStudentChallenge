@@ -49,7 +49,23 @@ struct Step1: View {
         }
         .if(chosenShape == .triangle) {
             $0.overlay(alignment: .bottom) {
-                Text("Choosing triangle means pressing one of the keys three times when making the key shape.")
+                Text("The triangle will require repeating some keys during the process.")
+                    .font(.caption)
+                    .fontWeight(.semibold)
+                    .frame(width: deviceWidth)
+            }
+        }
+        .if(chosenShape == .circle) {
+            $0.overlay(alignment: .bottom) {
+                Text("The circle will require repeating some keys during the process.")
+                    .font(.caption)
+                    .fontWeight(.semibold)
+                    .frame(width: deviceWidth)
+            }
+        }
+        .if(chosenShape == .square) {
+            $0.overlay(alignment: .bottom) {
+                Text("The square is the best choice for starters. It is complete and doesn't require much effort.")
                     .font(.caption)
                     .fontWeight(.semibold)
                     .frame(width: deviceWidth)

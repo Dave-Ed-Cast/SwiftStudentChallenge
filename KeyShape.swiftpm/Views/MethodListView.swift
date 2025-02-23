@@ -15,24 +15,26 @@ struct MethodListView: View {
     @State private var swipedShapeID: UUID? = nil
     
     var body: some View {
-        List {
-            ForEach(methodHolder.shapes) { shape in
-                ShapeRowView(
-                    shape: shape,
-                    renameAction: { renameShape(shape) },
-                    deleteAction: { methodHolder.deleteShape(shape) }
-                )
+        VStack {
+            List {
+                ForEach(methodHolder.shapes) { shape in
+                    ShapeRowView(
+                        shape: shape,
+                        renameAction: { renameShape(shape) },
+                        deleteAction: { methodHolder.deleteShape(shape) }
+                    )
+                }
+                .onDelete(perform: deleteShape)
             }
-            .onDelete(perform: deleteShape)
-        }
-        
-        
-        .navigationTitle("Your combinations")
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink(destination: MainView()) {
-                    Text("Create")
-                        .foregroundStyle(.blue)
+            
+            
+            .navigationTitle("Your combinations")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    NavigationLink(destination: MainView()) {
+                        Text("Create")
+                            .foregroundStyle(.blue)
+                    }
                 }
             }
         }

@@ -33,6 +33,8 @@ struct ShapeRowView: View {
                     .fontWeight(.medium)
                     .foregroundColor(.gray)
                     .padding(.leading, 20)
+                Spacer()
+                Image(systemName: "ellipsis")
             }
             
         }
@@ -46,6 +48,8 @@ struct ShapeRowView: View {
                 Label("Rename", systemImage: "pencil")
             }
             .tint(.orange)
+            
+            
         }
         .frame(height: deviceOrientation.isPortrait ? deviceHeight * 0.03 : deviceHeight * 0.05)
     }

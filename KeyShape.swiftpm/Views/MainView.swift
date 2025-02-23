@@ -18,6 +18,8 @@ struct MainView: View {
     @State private var shape: ShapeView.ShapeType = .unknown
     @State private var text = ""
     @State private var goNext = false
+    @State private var userWriting = false
+    @State private var popoverDismissed: Bool = false
     
     private let lastStep = Steps.stepsArray.count
     
@@ -55,15 +57,29 @@ struct MainView: View {
                     Step4()
                 case 4:
                     Step5(shape: $shape, hand: $hand)
+                    
                     TextField("Create your password here...", text: $text)
                         .contentShape(Rectangle())
                         .padding()
                         .frame(width: deviceWidth * 0.35, height: deviceHeight * 0.05)
                         .background(RoundedRectangle(cornerRadius: 20).fill(Color.gray.opacity(0.2)))
                         .onChange(of: text) { newValue in
+                            if !popoverDismissed {
+                                userWriting = true
+                            }
                             if newValue.count > 30 {
                                 text = String(newValue.prefix(30))
                             }
+                        }
+                        .popover(isPresented: $userWriting) {
+                            Text("Hold letters and drag downwards for numbers or special characters!")
+                                .font(.headline)
+                                .onTapGesture {
+                                    userWriting = false
+                                    popoverDismissed = true
+                                }
+                            
+                                .padding()
                         }
                         .padding(.horizontal)
                     Spacer()
@@ -128,7 +144,7 @@ struct MainView: View {
     let methodHolder = MethodHolder()
     
     methodHolder.shapes = [
-//        ShapeEntry(id: UUID(), side: "left", shapeType: .circle, name: "default")
+        //        ShapeEntry(id: UUID(), side: "left", shapeType: .circle, name: "default")
         
     ]
     

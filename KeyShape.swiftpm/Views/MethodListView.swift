@@ -15,7 +15,7 @@ struct MethodListView: View {
     @State private var swipedShapeID: UUID? = nil
     
     var body: some View {
-        VStack {
+        NavigationStack {
             List {
                 ForEach(methodHolder.shapes) { shape in
                     ShapeRowView(

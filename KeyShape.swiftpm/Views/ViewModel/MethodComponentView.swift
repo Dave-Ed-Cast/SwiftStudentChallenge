@@ -18,12 +18,10 @@ struct MethodComponentView: View {
         HStack {
             
             let handSize = deviceOrientation.isPortrait ? deviceWidth * 0.125 : deviceWidth * 0.065
-//            let shapeSize = deviceOrientation.isPortrait ? deviceWidth * 0.08 : deviceWidth * 0.04
-            let shapeSize = deviceWidth * 0.08
-//            let imageWidth = deviceOrientation.isPortrait ? deviceWidth * 0.6 : deviceWidth * 0.25
-//            let imageHeight = deviceOrientation.isPortrait ? deviceWidth * 0.15 : deviceHeight * 0.1
-            let imageWidth = deviceWidth * 0.6
-            let imageHeight = deviceWidth * 0.15
+            let shapeSize = deviceOrientation.isPortrait ? deviceWidth * 0.08 : deviceWidth * 0.04
+            
+            let imageWidth = deviceOrientation.isPortrait ? deviceWidth * 0.6 : deviceWidth * 0.25
+            let imageHeight = deviceOrientation.isPortrait ? deviceWidth * 0.15 : deviceHeight * 0.1
             
             Image(hand).resizable()
                 .frame(width: handSize, height: handSize)
@@ -82,7 +80,7 @@ struct MethodComponentView: View {
 }
 
 #Preview {
-    VStack(spacing: 50) {
+    ScrollView {
         
         VStack {
             MethodComponentView(hand: "right", shape: .circle)

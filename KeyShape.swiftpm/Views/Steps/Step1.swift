@@ -20,7 +20,7 @@ struct Step1: View {
         VStack {
             Spacer()
             Text(recognizedText != "" ? "You picked: \(recognizedText)" : "Pick one of the shapes below")
-                .accessibilityHint("Between circle, triangle and square choose or speak one")
+                .accessibilityHint("Between circle, triangle and square choose one")
                 .font(.headline)
                 .padding()
             

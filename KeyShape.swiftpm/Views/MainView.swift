@@ -122,11 +122,6 @@ struct MainView: View {
             .navigationDestination(isPresented: $goNext) {
                 MethodListView().navigationBarBackButtonHidden(true)
             }
-            
-            
-            .onChange(of: currentStep) { newValue in
-                print(currentStep)
-            }
             .disabled(isButtonDisabled)
             .opacity(isButtonDisabled ? 0.5 : 1)
             

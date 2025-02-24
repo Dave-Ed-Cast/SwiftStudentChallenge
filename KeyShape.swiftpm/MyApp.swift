@@ -1,5 +1,5 @@
 //
-//  AnimatedWelcome.swift
+//  MyApp.swift
 //  PlaygroundApp
 //
 //  Created by Davide Castaldi on 06/02/25.
@@ -13,7 +13,6 @@ struct MyApp: App {
     @StateObject private var navigation = Navigation.shared
     @StateObject private var onboarding: Onboarding = .init()
 
-    @State var test: String = "left"
     var body: some Scene {
         
         WindowGroup {

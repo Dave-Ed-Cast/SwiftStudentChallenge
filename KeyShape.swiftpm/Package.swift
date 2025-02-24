@@ -16,11 +16,11 @@ let package = Package(
         .iOSApplication(
             name: "KeyShape",
             targets: ["AppModule"],
-            bundleIdentifier: "com.Dave.test5",
+            bundleIdentifier: "com.Dave.KeyShape",
             teamIdentifier: "WLW428B75Y",
             displayVersion: "1.0",
             bundleVersion: "1",
-            appIcon: .placeholder(icon: .tv),
+            appIcon: .asset("AppIcon"),
             accentColor: .asset("AccentColor"),
             supportedDeviceFamilies: [
                 .pad,

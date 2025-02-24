@@ -10,9 +10,7 @@ import SwiftUI
 struct ShapeRowView: View {
     
     @Environment(\.colorScheme) private var colorScheme
-    
-    @State private var tapped: Bool = false
-    
+        
     let shape: ShapeEntry
     let renameAction: () -> Void
     let deleteAction: () -> Void

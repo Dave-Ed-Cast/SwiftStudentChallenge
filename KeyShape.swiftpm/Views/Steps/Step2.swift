@@ -18,7 +18,7 @@ struct Step2: View {
             Spacer()
             Text(hand != "none" ? "You picked: \(hand)" : "Pick one of the hands")
                 .font(.headline)
-                .accessibilityHint("Choose between left or right hand by tapping or speaking the name.")
+                .accessibilityHint("Choose between left or right hand by tapping.")
 
             HStack(spacing: 15) {
                 Button {
